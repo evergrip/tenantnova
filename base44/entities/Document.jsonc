@@ -17,6 +17,9 @@
     "tenant_id_nullable": {
       "type": "string"
     },
+    "application_id_nullable": {
+      "type": "string"
+    },
     "financial_ledger_entry_id_nullable": {
       "type": "string"
     },

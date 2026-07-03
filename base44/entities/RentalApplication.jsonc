@@ -1,0 +1,162 @@
+{
+  "name": "RentalApplication",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "applicant_user_id": {
+      "type": "string"
+    },
+    "property_id_nullable": {
+      "type": "string"
+    },
+    "unit_id_nullable": {
+      "type": "string"
+    },
+    "desired_move_in_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "applicant_first_name": {
+      "type": "string"
+    },
+    "applicant_last_name": {
+      "type": "string"
+    },
+    "applicant_email": {
+      "type": "string"
+    },
+    "applicant_phone": {
+      "type": "string"
+    },
+    "current_address": {
+      "type": "string"
+    },
+    "previous_addresses_2_years_json": {
+      "type": "object"
+    },
+    "household_members_json": {
+      "type": "object"
+    },
+    "co_applicants_json": {
+      "type": "object"
+    },
+    "employment_info_json": {
+      "type": "object"
+    },
+    "income_info_json": {
+      "type": "object"
+    },
+    "references_json": {
+      "type": "object"
+    },
+    "pets_json": {
+      "type": "object"
+    },
+    "vehicles_json": {
+      "type": "object"
+    },
+    "smoking_status": {
+      "type": "string"
+    },
+    "special_notes": {
+      "type": "string"
+    },
+    "uploaded_document_ids_array": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "credit_check_consent": {
+      "type": "boolean",
+      "default": false
+    },
+    "background_check_consent": {
+      "type": "boolean",
+      "default": false
+    },
+    "personal_information_consent": {
+      "type": "boolean",
+      "default": false
+    },
+    "electronic_signature_consent": {
+      "type": "boolean",
+      "default": false
+    },
+    "application_status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Submitted",
+        "Under Review",
+        "More Info Requested",
+        "Approved",
+        "Declined",
+        "Withdrawn",
+        "Lease Offered",
+        "Lease Signed"
+      ],
+      "default": "Draft"
+    },
+    "internal_score": {
+      "type": "number"
+    },
+    "internal_notes": {
+      "type": "string"
+    },
+    "admin_review_notes": {
+      "type": "string"
+    },
+    "applicant_visible_message": {
+      "type": "string"
+    },
+    "decision_reason_internal": {
+      "type": "string"
+    },
+    "linked_tenant_id_nullable": {
+      "type": "string"
+    },
+    "linked_lease_id_nullable": {
+      "type": "string"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reviewed_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approved_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "declined_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "withdrawn_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "applicant_user_id",
+    "applicant_first_name",
+    "applicant_last_name",
+    "applicant_email",
+    "application_status",
+    "is_active"
+  ]
+}

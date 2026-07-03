@@ -15,10 +15,11 @@ export default function TenantNovaLayout() {
 
   const adminLinks = [
     ["/admin", "Dashboard"], ["/admin/properties", "Properties & Units"], ["/admin/tenants-leases", "Tenants & Leases"],
-    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/maintenance", "Maintenance"], ["/admin/inspections", "Inspections"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
+    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/maintenance", "Maintenance"], ["/admin/inspections", "Inspections"], ["/admin/applications", "Applications"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
   ];
   const tenantLinks = [["/tenant", "Dashboard"], ["/tenant/lease", "My Lease"], ["/tenant/ledger", "Rent Ledger & Payments"], ["/tenant/documents", "Documents"], ["/tenant/maintenance", "Maintenance"], ["/tenant/inspections", "Inspections"], ["/tenant/profile", "Profile"], ["/tenant/contact", "Contact Manager"]];
-  const links = access.isAdmin ? adminLinks : tenantLinks;
+  const applicantLinks = [["/applicant/application", "My Application"]];
+  const links = access.isAdmin ? adminLinks : access.isTenant && access.isApplicant ? [...tenantLinks, ...applicantLinks] : access.isApplicant ? applicantLinks : tenantLinks;
   const tenantSafeOrganization = access.organization ? {
     organization_name: access.organization.name,
     logo: access.organization.logo,
@@ -32,6 +33,7 @@ export default function TenantNovaLayout() {
 
   if (location.pathname.startsWith("/admin") && !access.isAdmin) return <AccessDenied />;
   if (location.pathname.startsWith("/tenant") && !access.isTenant && !access.isAdmin) return <AccessDenied />;
+  if (location.pathname.startsWith("/applicant") && !access.isApplicant) return <AccessDenied />;
 
   return <div className="min-h-screen bg-slate-50 text-slate-950">
     <aside className="fixed inset-x-0 top-0 z-20 border-b bg-white lg:inset-y-0 lg:right-auto lg:w-72 lg:border-b-0 lg:border-r">

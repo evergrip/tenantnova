@@ -13,6 +13,7 @@
       "enum": [
         "Admin",
         "Tenant",
+        "Applicant",
         "Vendor",
         "Investor",
         "Staff",
