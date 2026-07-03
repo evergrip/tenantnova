@@ -13,7 +13,7 @@ export default function TenantNovaLayout() {
   useEffect(() => {
     if (!authChecked) return;
     if (!isAuthenticated) {
-      navigateToLogin();
+      window.location.href = `/login?from_url=${encodeURIComponent(window.location.href)}`;
       return;
     }
     let cancelled = false;
