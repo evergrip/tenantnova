@@ -29,6 +29,8 @@ import AdminComplianceRules from '@/pages/admin/AdminComplianceRules';
 import AdminFormWorkflowRules from '@/pages/admin/AdminFormWorkflowRules';
 import AdminInvestorReports from '@/pages/admin/AdminInvestorReports';
 import AdminInvestorReportDetail from '@/pages/admin/AdminInvestorReportDetail';
+import AdminNotificationCenter from '@/pages/admin/AdminNotificationCenter';
+import AdminTaskQueue from '@/pages/admin/AdminTaskQueue';
 import PropertyPerformanceDashboard from '@/pages/admin/PropertyPerformanceDashboard';
 import TenantDashboard from '@/pages/tenant/TenantDashboard';
 import MyLease from '@/pages/tenant/MyLease';
@@ -90,6 +92,8 @@ const AuthenticatedApp = () => {
         <Route path="/admin/form-workflows" element={<AdminFormWorkflowRules />} />
         <Route path="/admin/investor-reports" element={<AdminInvestorReports />} />
         <Route path="/admin/investor-reports/:reportId" element={<AdminInvestorReportDetail />} />
+        <Route path="/admin/notifications" element={<AdminNotificationCenter />} />
+        <Route path="/admin/tasks" element={<AdminTaskQueue />} />
         <Route path="/admin/audit-logs" element={<AuditLogs />} />
         <Route path="/admin/settings" element={<OrganizationSettings />} />
         <Route path="/tenant" element={<TenantDashboard />} />

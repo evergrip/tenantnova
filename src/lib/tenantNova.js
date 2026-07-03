@@ -1,6 +1,7 @@
 import { base44 } from "@/api/base44Client";
 
 export const ADMIN_ROLES = ["Admin", "ReadOnlyAdmin"];
+export const COMMAND_CENTER_ROLES = ["Admin", "Staff"];
 export const activeOnly = (record) => !record?.deleted_at;
 export const tenantLeaseAccess = ["Full Lease Access", "Limited Occupant Access", "Historical Access"];
 
@@ -54,13 +55,14 @@ export async function resolveTenantNovaAccess() {
   const membership = memberships.find(m => m.role === "Admin") || memberships.find(m => m.role === "Tenant") || memberships.find(m => m.role === "Applicant") || memberships[0];
   const organization = await base44.entities.Organization.get(membership.organization_id);
   const isAdmin = memberships.some(m => m.organization_id === membership.organization_id && m.role === "Admin");
+  const isCommandCenterUser = memberships.some(m => m.organization_id === membership.organization_id && COMMAND_CENTER_ROLES.includes(m.role));
   const isTenant = memberships.some(m => m.organization_id === membership.organization_id && m.role === "Tenant");
   const isApplicant = memberships.some(m => m.organization_id === membership.organization_id && m.role === "Applicant");
   const tenantProfiles = isTenant
     ? (await base44.entities.Tenant.filter({ organization_id: membership.organization_id, auth_user_id: user.id })).filter(activeOnly)
     : [];
 
-  return { user, membership, organization, tenant: tenantProfiles[0] || null, status: "ready", isAdmin, isTenant, isApplicant };
+  return { user, membership, organization, tenant: tenantProfiles[0] || null, status: "ready", isAdmin, isCommandCenterUser, isTenant, isApplicant };
 }
 
 export function canTenantUseParticipant(participant) {

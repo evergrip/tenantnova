@@ -1,0 +1,118 @@
+{
+  "name": "AdminTask",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "task_type": {
+      "type": "string",
+      "enum": [
+        "Maintenance Follow-Up",
+        "Arrears Review",
+        "Lease Review",
+        "Document Review",
+        "Application Review",
+        "Inspection Review",
+        "Compliance Review",
+        "Form Draft Review",
+        "Investor Report Review",
+        "System",
+        "Other"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Normal",
+        "High",
+        "Urgent"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "In Progress",
+        "Waiting",
+        "Completed",
+        "Dismissed",
+        "Archived"
+      ]
+    },
+    "assigned_to_user_id_nullable": {
+      "type": "string"
+    },
+    "created_by_user_id_nullable": {
+      "type": "string"
+    },
+    "related_entity_type_nullable": {
+      "type": "string"
+    },
+    "related_entity_id_nullable": {
+      "type": "string"
+    },
+    "property_id_nullable": {
+      "type": "string"
+    },
+    "unit_id_nullable": {
+      "type": "string"
+    },
+    "lease_id_nullable": {
+      "type": "string"
+    },
+    "tenant_id_nullable": {
+      "type": "string"
+    },
+    "applicant_user_id_nullable": {
+      "type": "string"
+    },
+    "due_date_nullable": {
+      "type": "string",
+      "format": "date"
+    },
+    "completed_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dismissed_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "snoozed_until_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "internal_admin_note": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "task_type",
+    "title",
+    "priority",
+    "status",
+    "is_active",
+    "created_at"
+  ]
+}

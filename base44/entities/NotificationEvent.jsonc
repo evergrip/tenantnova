@@ -1,0 +1,113 @@
+{
+  "name": "NotificationEvent",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "Maintenance",
+        "Arrears",
+        "Lease",
+        "Document",
+        "Application",
+        "Inspection",
+        "Compliance",
+        "Forms",
+        "InvestorReport",
+        "System",
+        "Other"
+      ]
+    },
+    "event_title": {
+      "type": "string"
+    },
+    "event_message": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "Info",
+        "Warning",
+        "Urgent",
+        "Critical"
+      ]
+    },
+    "related_entity_type_nullable": {
+      "type": "string"
+    },
+    "related_entity_id_nullable": {
+      "type": "string"
+    },
+    "property_id_nullable": {
+      "type": "string"
+    },
+    "unit_id_nullable": {
+      "type": "string"
+    },
+    "lease_id_nullable": {
+      "type": "string"
+    },
+    "tenant_id_nullable": {
+      "type": "string"
+    },
+    "applicant_user_id_nullable": {
+      "type": "string"
+    },
+    "assigned_to_user_id_nullable": {
+      "type": "string"
+    },
+    "created_by_user_id_nullable": {
+      "type": "string"
+    },
+    "is_read": {
+      "type": "boolean",
+      "default": false
+    },
+    "read_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dismissed_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "snoozed_until_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "action_url_nullable": {
+      "type": "string"
+    },
+    "internal_only": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "event_type",
+    "event_title",
+    "event_message",
+    "severity",
+    "is_read",
+    "internal_only",
+    "is_active",
+    "created_at"
+  ]
+}
