@@ -1,7 +1,0 @@
-import React from "react";
-import { contactCategories, contactMethods, contactPriorities } from "@/lib/contactMessages";
-
-export default function ContactMessageForm({ form, setForm, onSubmit }) {
-  const set = (k, v) => setForm({ ...form, [k]: v });
-  return <form onSubmit={onSubmit} className="rounded-2xl border bg-white p-5"><h2 className="font-bold">Send a message</h2><div className="mt-4 grid gap-3 md:grid-cols-2"><input required className="rounded-xl border p-3 md:col-span-2" placeholder="Subject" value={form.subject || ""} onChange={e => set("subject", e.target.value)} /><textarea required className="rounded-xl border p-3 md:col-span-2" placeholder="Message" value={form.body || ""} onChange={e => set("body", e.target.value)} /><select className="rounded-xl border p-3" value={form.category || "General"} onChange={e => set("category", e.target.value)}>{contactCategories.map(v => <option key={v}>{v}</option>)}</select><select className="rounded-xl border p-3" value={form.priority || "Normal"} onChange={e => set("priority", e.target.value)}>{contactPriorities.map(v => <option key={v}>{v}</option>)}</select><select className="rounded-xl border p-3" value={form.preferred_contact_method || "Portal"} onChange={e => set("preferred_contact_method", e.target.value)}>{contactMethods.map(v => <option key={v}>{v}</option>)}</select></div><button className="mt-4 rounded-xl bg-teal-700 px-4 py-2 text-white">Submit message</button></form>;
-}
