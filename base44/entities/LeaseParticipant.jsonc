@@ -1,0 +1,61 @@
+{
+  "name": "LeaseParticipant",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "lease_id": {
+      "type": "string"
+    },
+    "tenant_id": {
+      "type": "string"
+    },
+    "participant_role": {
+      "type": "string",
+      "enum": [
+        "Primary Tenant",
+        "Co-Tenant",
+        "Occupant",
+        "Guarantor",
+        "Former Tenant"
+      ]
+    },
+    "access_level": {
+      "type": "string",
+      "enum": [
+        "Full Lease Access",
+        "Limited Occupant Access",
+        "Historical Access",
+        "No Portal Access"
+      ]
+    },
+    "is_financially_responsible": {
+      "type": "boolean",
+      "default": false
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date_optional": {
+      "type": "string",
+      "format": "date"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "lease_id",
+    "tenant_id",
+    "participant_role",
+    "access_level"
+  ]
+}

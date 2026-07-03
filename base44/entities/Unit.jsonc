@@ -1,0 +1,65 @@
+{
+  "name": "Unit",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "unit_number": {
+      "type": "string"
+    },
+    "bedrooms": {
+      "type": "number"
+    },
+    "bathrooms": {
+      "type": "number"
+    },
+    "square_feet": {
+      "type": "number"
+    },
+    "current_market_rent": {
+      "type": "number"
+    },
+    "current_status": {
+      "type": "string",
+      "enum": [
+        "Vacant",
+        "Occupied",
+        "Turnover",
+        "Under Renovation",
+        "Offline"
+      ],
+      "default": "Vacant"
+    },
+    "features_json": {
+      "type": "object"
+    },
+    "parking_info": {
+      "type": "string"
+    },
+    "utilities_responsibility": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "photos_array": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_id",
+    "unit_number"
+  ]
+}

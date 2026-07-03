@@ -6,6 +6,18 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
+import TenantNovaLayout from '@/components/tenantnova/TenantNovaLayout';
+import Home from '@/pages/Home';
+import AdminDashboard from '@/pages/admin/AdminDashboard';
+import PropertiesUnits from '@/pages/admin/PropertiesUnits';
+import TenantsLeases from '@/pages/admin/TenantsLeases';
+import LeaseParticipants from '@/pages/admin/LeaseParticipants';
+import AuditLogs from '@/pages/admin/AuditLogs';
+import OrganizationSettings from '@/pages/admin/OrganizationSettings';
+import TenantDashboard from '@/pages/tenant/TenantDashboard';
+import MyLease from '@/pages/tenant/MyLease';
+import Profile from '@/pages/tenant/Profile';
+import ContactManager from '@/pages/tenant/ContactManager';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -34,7 +46,19 @@ const AuthenticatedApp = () => {
   // Render the main app
   return (
     <Routes>
-      {/* Add your page Route elements here */}
+      <Route element={<TenantNovaLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/properties" element={<PropertiesUnits />} />
+        <Route path="/admin/tenants-leases" element={<TenantsLeases />} />
+        <Route path="/admin/lease-participants" element={<LeaseParticipants />} />
+        <Route path="/admin/audit-logs" element={<AuditLogs />} />
+        <Route path="/admin/settings" element={<OrganizationSettings />} />
+        <Route path="/tenant" element={<TenantDashboard />} />
+        <Route path="/tenant/lease" element={<MyLease />} />
+        <Route path="/tenant/profile" element={<Profile />} />
+        <Route path="/tenant/contact" element={<ContactManager />} />
+      </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

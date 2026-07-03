@@ -1,0 +1,70 @@
+{
+  "name": "Tenant",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "auth_user_id": {
+      "type": "string"
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "emergency_contact_name": {
+      "type": "string"
+    },
+    "emergency_contact_phone": {
+      "type": "string"
+    },
+    "vehicle_info_json": {
+      "type": "object"
+    },
+    "pets_on_file_json": {
+      "type": "object"
+    },
+    "additional_occupants_json": {
+      "type": "object"
+    },
+    "notification_preferences_json": {
+      "type": "object"
+    },
+    "onboarding_status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Complete"
+      ],
+      "default": "Not Started"
+    },
+    "active_status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Former",
+        "Inactive"
+      ],
+      "default": "Active"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "first_name",
+    "last_name",
+    "email"
+  ]
+}

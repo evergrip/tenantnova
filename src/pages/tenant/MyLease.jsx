@@ -1,0 +1,12 @@
+import React, { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { base44 } from "@/api/base44Client";
+import { getTenantLeases } from "@/lib/tenantNova";
+
+export default function MyLease() {
+  const access = useOutletContext();
+  const [items, setItems] = useState([]);
+  const [lookups, setLookups] = useState({});
+  useEffect(() => { async function load() { if (!access.tenant) return; const leases = await getTenantLeases(access.organization.id, access.tenant.id); const pairs = {}; for (const { lease } of leases) { pairs[lease.property_id] = await base44.entities.Property.get(lease.property_id); pairs[lease.unit_id] = await base44.entities.Unit.get(lease.unit_id); } setLookups(pairs); setItems(leases); } load(); }, [access]);
+  return <section><h1 className="text-3xl font-bold">My Lease</h1><p className="mt-2 text-slate-600">Only leases connected to your Tenant profile by LeaseParticipant are shown.</p><div className="mt-6 grid gap-4">{items.map(({ lease, participant }) => <div key={lease.id} className="rounded-2xl border bg-white p-5"><div className="flex flex-wrap justify-between gap-3"><div><h2 className="text-xl font-bold">{lease.lease_status} · {lease.lease_type}</h2><p className="text-slate-600">{lookups[lease.property_id]?.property_name} · Unit {lookups[lease.unit_id]?.unit_number}</p></div><span className="rounded-full bg-teal-100 px-3 py-1 text-sm text-teal-800">{participant.participant_role}</span></div><dl className="mt-5 grid gap-3 text-sm md:grid-cols-3"><div><dt className="text-slate-500">Start</dt><dd className="font-medium">{lease.start_date}</dd></div><div><dt className="text-slate-500">End</dt><dd className="font-medium">{lease.end_date || "Ongoing"}</dd></div><div><dt className="text-slate-500">Rent</dt><dd className="font-medium">${lease.rent_amount}</dd></div><div><dt className="text-slate-500">Due day</dt><dd className="font-medium">{lease.rent_due_day}</dd></div><div><dt className="text-slate-500">Access level</dt><dd className="font-medium">{participant.access_level}</dd></div><div><dt className="text-slate-500">Financial responsibility</dt><dd className="font-medium">{participant.is_financially_responsible ? "Yes" : "No"}</dd></div></dl></div>)}{items.length === 0 && <div className="rounded-2xl border bg-white p-6 text-slate-500">No lease access is available.</div>}</div></section>;
+}

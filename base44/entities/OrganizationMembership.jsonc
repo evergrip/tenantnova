@@ -1,0 +1,52 @@
+{
+  "name": "OrganizationMembership",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "Admin",
+        "Tenant",
+        "Vendor",
+        "Investor",
+        "Staff",
+        "ReadOnlyAdmin"
+      ]
+    },
+    "sub_role_optional": {
+      "type": "string",
+      "enum": [
+        "Leasing Coordinator",
+        "Maintenance Lead",
+        "Accounting",
+        "Property Manager",
+        "Read Only"
+      ]
+    },
+    "property_scope_ids_optional": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "user_id",
+    "role"
+  ]
+}

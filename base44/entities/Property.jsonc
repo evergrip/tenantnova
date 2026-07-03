@@ -1,0 +1,73 @@
+{
+  "name": "Property",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_name": {
+      "type": "string"
+    },
+    "street_address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string",
+      "default": "NS"
+    },
+    "postal_code": {
+      "type": "string"
+    },
+    "property_type": {
+      "type": "string"
+    },
+    "ownership_entity": {
+      "type": "string"
+    },
+    "property_manager": {
+      "type": "string"
+    },
+    "photos_array": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "insurance_policy_info": {
+      "type": "string"
+    },
+    "mortgage_info_optional": {
+      "type": "string"
+    },
+    "acquisition_date_optional": {
+      "type": "string",
+      "format": "date"
+    },
+    "acquisition_price_optional": {
+      "type": "number"
+    },
+    "active_status": {
+      "type": "string",
+      "enum": [
+        "Active",
+        "Inactive",
+        "Archived"
+      ],
+      "default": "Active"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_name"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "Lease",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "primary_tenant_id": {
+      "type": "string"
+    },
+    "lease_type": {
+      "type": "string",
+      "enum": [
+        "Fixed Term",
+        "Year-to-Year",
+        "Month-to-Month",
+        "Week-to-Week"
+      ]
+    },
+    "province": {
+      "type": "string",
+      "default": "NS"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "periodic_status": {
+      "type": "string"
+    },
+    "rent_amount": {
+      "type": "number"
+    },
+    "rent_due_day": {
+      "type": "number",
+      "default": 1
+    },
+    "payment_frequency": {
+      "type": "string",
+      "default": "Monthly"
+    },
+    "security_deposit_amount": {
+      "type": "number"
+    },
+    "security_deposit_paid_status": {
+      "type": "string",
+      "enum": [
+        "Not Paid",
+        "Partially Paid",
+        "Paid",
+        "Refunded"
+      ],
+      "default": "Not Paid"
+    },
+    "security_deposit_trust_notes": {
+      "type": "string"
+    },
+    "utilities_responsibility": {
+      "type": "string"
+    },
+    "special_terms_rich_text_or_json": {
+      "type": "object"
+    },
+    "renewal_status": {
+      "type": "string"
+    },
+    "move_out_status": {
+      "type": "string"
+    },
+    "lease_status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Pending Signature",
+        "Active",
+        "Ending",
+        "Ended",
+        "Archived"
+      ],
+      "default": "Draft"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_id",
+    "unit_id",
+    "lease_type",
+    "start_date",
+    "rent_amount"
+  ]
+}

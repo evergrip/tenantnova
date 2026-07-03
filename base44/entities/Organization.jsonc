@@ -1,0 +1,53 @@
+{
+  "name": "Organization",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "string"
+    },
+    "primary_color": {
+      "type": "string",
+      "default": "#0f766e"
+    },
+    "support_email": {
+      "type": "string"
+    },
+    "support_phone": {
+      "type": "string"
+    },
+    "default_province": {
+      "type": "string",
+      "default": "NS"
+    },
+    "rent_due_day_default": {
+      "type": "number",
+      "default": 1
+    },
+    "late_fee_settings_json": {
+      "type": "object"
+    },
+    "notification_settings_json": {
+      "type": "object"
+    },
+    "payment_settings_json": {
+      "type": "object"
+    },
+    "branding_settings_json": {
+      "type": "object"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
