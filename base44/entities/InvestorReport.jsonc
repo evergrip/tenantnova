@@ -1,6 +1,9 @@
 {
   "name": "InvestorReport",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -49,7 +52,19 @@
       "type": "string"
     },
     "property_snapshot_json": {
-      "type": "object"
+      "type": "object",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "occupancy_rate": {
       "type": "number"
@@ -100,10 +115,34 @@
       "type": "number"
     },
     "NOI": {
-      "type": "number"
+      "type": "number",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "cash_flow_after_debt_optional": {
-      "type": "number"
+      "type": "number",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "maintenance_summary_json": {
       "type": "object"
@@ -121,16 +160,52 @@
       "type": "object"
     },
     "risk_notes": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "next_steps": {
       "type": "string"
     },
     "capex_notes": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "internal_admin_note": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "attached_document_id_nullable": {
       "type": "string"

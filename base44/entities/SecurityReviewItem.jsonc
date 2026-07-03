@@ -1,6 +1,9 @@
 {
   "name": "SecurityReviewItem",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -57,13 +60,37 @@
       "type": "string"
     },
     "affected_file_path_nullable": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "evidence_required": {
       "type": "string"
     },
     "evidence_notes": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "recommended_fix": {
       "type": "string"

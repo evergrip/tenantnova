@@ -1,6 +1,9 @@
 {
   "name": "FinancialLedgerEntry",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -63,7 +66,19 @@
       "default": "Manual"
     },
     "external_reference_optional": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "receipt_reference_optional": {
       "type": "string"
@@ -83,7 +98,19 @@
       "type": "string"
     },
     "internal_admin_note": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "reversal_entry_id_nullable": {
       "type": "string"

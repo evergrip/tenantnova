@@ -1,6 +1,9 @@
 {
   "name": "RentalApplication",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -101,19 +104,67 @@
       "default": "Draft"
     },
     "internal_score": {
-      "type": "number"
+      "type": "number",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "internal_notes": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "admin_review_notes": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "applicant_visible_message": {
       "type": "string"
     },
     "decision_reason_internal": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "linked_tenant_id_nullable": {
       "type": "string"

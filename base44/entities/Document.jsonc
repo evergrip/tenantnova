@@ -1,6 +1,9 @@
 {
   "name": "Document",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -46,7 +49,19 @@
       "type": "string"
     },
     "file_url_or_storage_reference": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "uploaded_by_user_id": {
       "type": "string"
@@ -91,7 +106,19 @@
       "type": "string"
     },
     "internal_admin_note": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "generated_by_user_id": {
       "type": "string"
@@ -101,7 +128,19 @@
       "format": "date-time"
     },
     "draft_metadata_json": {
-      "type": "object"
+      "type": "object",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "is_active": {
       "type": "boolean",

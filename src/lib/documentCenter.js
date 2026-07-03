@@ -1,5 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, canTenantUseParticipant, createAuditLog } from "@/lib/tenantNova";
+import { sanitizeTenantPayload } from "@/lib/security";
 
 export const documentCategories = ["ID", "Income Proof", "Credit Background Check", "Insurance", "Lease", "Addendum", "Inspection", "Notice", "Form", "Receipt", "Maintenance", "Investor Report", "Internal", "Other"];
 export const documentVisibilities = ["Tenant Only", "Shared With Tenant", "Admin Only", "Internal", "Investor Aggregate"];
@@ -33,25 +34,7 @@ export function expiryStatus(doc) {
 }
 
 export function tenantSafeDocument(doc) {
-  return {
-    id: doc.id,
-    organization_id: doc.organization_id,
-    property_id_nullable: doc.property_id_nullable,
-    unit_id_nullable: doc.unit_id_nullable,
-    lease_id_nullable: doc.lease_id_nullable,
-    tenant_id_nullable: doc.tenant_id_nullable,
-    financial_ledger_entry_id_nullable: doc.financial_ledger_entry_id_nullable,
-    category: doc.category,
-    title: doc.title,
-    file_url_or_storage_reference: doc.file_url_or_storage_reference,
-    visibility: doc.visibility,
-    version: doc.version,
-    expiry_date_nullable: doc.expiry_date_nullable,
-    requires_signature: doc.requires_signature,
-    signature_status: doc.signature_status,
-    tenant_visible_note: doc.tenant_visible_note,
-    created_date: doc.created_date
-  };
+  return sanitizeTenantPayload(doc, "Document");
 }
 
 export async function getTenantDocumentContext(access) {

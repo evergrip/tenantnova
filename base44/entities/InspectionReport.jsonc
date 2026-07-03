@@ -1,6 +1,9 @@
 {
   "name": "InspectionReport",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -57,7 +60,19 @@
       "type": "string"
     },
     "internal_admin_notes": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "shared_with_tenant": {
       "type": "boolean",

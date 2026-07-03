@@ -1,6 +1,9 @@
 {
   "name": "IntegrationReadinessItem",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -102,7 +105,19 @@
       "type": "string"
     },
     "blocker_reason_nullable": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "reviewed_by_user_id_nullable": {
       "type": "string"

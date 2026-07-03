@@ -1,5 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, createAuditLog, getTenantLeases } from "@/lib/tenantNova";
+import { sanitizeTenantPayload } from "@/lib/security";
 
 export const maintenanceCategories = ["Plumbing", "Electrical", "HVAC", "Appliance", "Structural", "Pest", "Exterior", "Safety", "Cosmetic", "Other"];
 export const maintenancePriorities = ["Emergency", "Urgent", "Routine", "Low"];
@@ -17,13 +18,11 @@ export async function tenantContext(access) {
 }
 
 export function tenantSafeMaintenance(r) {
-  const { internal_notes, cost_estimate, actual_cost, vendor_id_nullable, assigned_to_user_id_nullable, chargeback_amount, ...safe } = r;
-  return safe;
+  return sanitizeTenantPayload(r, "MaintenanceRequest");
 }
 
 export function tenantSafeInspection(r) {
-  const { internal_admin_notes, ...safe } = r;
-  return safe;
+  return sanitizeTenantPayload(r, "InspectionReport");
 }
 
 export function canTenantAccessMaintenance(r, access, ctx) {

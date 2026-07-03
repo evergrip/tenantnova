@@ -1,5 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, createAuditLog } from "@/lib/tenantNova";
+import { sanitizeApplicantPayload } from "@/lib/security";
 
 export const applicationStatuses = ["Draft", "Submitted", "Under Review", "More Info Requested", "Approved", "Declined", "Withdrawn", "Lease Offered", "Lease Signed"];
 export const editableApplicantStatuses = ["Draft", "More Info Requested"];
@@ -19,9 +20,7 @@ export const jsonText = (value) => JSON.stringify(value || {}, null, 2);
 export const splitIds = (value) => (value || "").split(",").map(v => v.trim()).filter(Boolean);
 
 export function applicantSafeApplication(app) {
-  if (!app) return null;
-  const { internal_score, internal_notes, admin_review_notes, decision_reason_internal, ...safe } = app;
-  return safe;
+  return sanitizeApplicantPayload(app, "RentalApplication");
 }
 
 export function applicantCanAccess(app, access) {
@@ -82,7 +81,7 @@ export async function listApplicantDocuments(access, applicationId) {
   const app = await base44.entities.RentalApplication.get(applicationId).catch(() => null);
   if (!applicantCanAccess(app, access)) return [];
   const docs = await base44.entities.Document.filter({ organization_id: access.organization_id, application_id_nullable: applicationId }, "-created_date", 50);
-  return docs.filter(d => activeOnly(d) && d.is_active !== false && !["Admin Only", "Internal"].includes(d.visibility));
+  return docs.filter(d => activeOnly(d) && d.is_active !== false && !["Admin Only", "Internal", "Investor Aggregate"].includes(d.visibility)).map(d => sanitizeApplicantPayload(d, "Document"));
 }
 
 export async function adminUpdateApplication(access, app, updates, reason) {

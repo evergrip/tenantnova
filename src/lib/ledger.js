@@ -1,5 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, canTenantUseParticipant, createAuditLog } from "@/lib/tenantNova";
+import { sanitizeTenantPayload } from "@/lib/security";
 
 export const entryTypes = ["Rent Charge", "Payment", "Security Deposit", "Late Fee", "Adjustment", "Refund", "NSF Fee", "Damage Charge", "Other"];
 export const methods = ["Manual", "E-transfer", "Cheque", "Cash", "Card Placeholder", "PAD Placeholder", "Other"];
@@ -11,7 +12,7 @@ export function calculateLeaseBalance(entries) {
 }
 
 export function tenantSafeLedgerEntry(entry) {
-  return {
+  return sanitizeTenantPayload({
     id: entry.id,
     lease_id: entry.lease_id,
     entry_type: entry.entry_type,
@@ -24,8 +25,9 @@ export function tenantSafeLedgerEntry(entry) {
     status: entry.status,
     tenant_visible_note: entry.tenant_visible_note,
     reversal_entry_id_nullable: entry.reversal_entry_id_nullable,
+    internal_admin_note: entry.internal_admin_note,
     created_date: entry.created_date
-  };
+  }, "FinancialLedgerEntry");
 }
 
 export async function getTenantLedgerEntries(access) {

@@ -1,6 +1,9 @@
 {
   "name": "ProductionHardeningItem",
   "type": "object",
+  "rls": {
+    "delete": false
+  },
   "properties": {
     "organization_id": {
       "type": "string"
@@ -75,7 +78,19 @@
       "type": "string"
     },
     "evidence_notes": {
-      "type": "string"
+      "type": "string",
+      "rls": {
+        "read": {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        "write": {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      }
     },
     "owner_user_id_nullable": {
       "type": "string"

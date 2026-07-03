@@ -1,8 +1,9 @@
 import { base44 } from "@/api/base44Client";
+import { denyUnauthorizedAccess } from "@/lib/security";
 
 export const ADMIN_ROLES = ["Admin", "ReadOnlyAdmin"];
-export const COMMAND_CENTER_ROLES = ["Admin", "Staff"];
-export const activeOnly = (record) => !record?.deleted_at;
+export const COMMAND_CENTER_ROLES = ["Admin", "Staff", "ReadOnlyAdmin"];
+export const activeOnly = (record) => record && record.is_active !== false && !record.deleted_at;
 export const tenantLeaseAccess = ["Full Lease Access", "Limited Occupant Access", "Historical Access"];
 
 export async function createAuditLog({ organizationId, user, role, action, entityType, entityId, beforeValues, afterValues, reason }) {
@@ -84,7 +85,8 @@ export async function getTenantLeases(organizationId, tenantId) {
 }
 
 export async function softArchive(entityName, record, access, reason) {
-  const archived = await base44.entities[entityName].update(record.id, { deleted_at: new Date().toISOString() });
+  if (!access?.isAdmin) await denyUnauthorizedAccess("Admin archive access required", entityName, record?.id, { access });
+  const archived = await base44.entities[entityName].update(record.id, { deleted_at: new Date().toISOString(), is_active: false });
   await createAuditLog({ organizationId: record.organization_id || access.organization?.id, user: access.user, role: access.membership?.role, action: `${entityName} archived`, entityType: entityName, entityId: record.id, beforeValues: record, afterValues: archived, reason });
   return archived;
 }
