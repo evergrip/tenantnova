@@ -130,7 +130,7 @@ export async function canAccessDocument(user, documentId) {
 }
 
 const tenantRedactedFields = [
-  "internal_notes", "internal_admin_note", "admin_review_notes", "decision_reason_internal", "internal_score", "cost_estimate", "actual_cost", "vendor_id_nullable", "assigned_to_user_id_nullable", "chargeback_amount", "evidence_notes", "blocker_reason_nullable", "file_url_or_storage_reference", "risk_notes", "capex_notes", "NOI", "cash_flow_after_debt_optional", "property_snapshot_json", "maintenance_summary_json", "leasing_summary_json", "inspection_summary_json", "application_summary_json", "forms_compliance_summary_json", "before_values_json", "after_values_json", "draft_metadata_json"
+  "internal_notes", "internal_admin_note", "internal_admin_notes", "admin_review_notes", "decision_reason_internal", "internal_score", "cost_estimate", "actual_cost", "vendor_id_nullable", "assigned_to_user_id_nullable", "chargeback_amount", "evidence_notes", "blocker_reason_nullable", "file_url_or_storage_reference", "risk_notes", "capex_notes", "NOI", "cash_flow_after_debt_optional", "property_snapshot_json", "maintenance_summary_json", "leasing_summary_json", "inspection_summary_json", "application_summary_json", "forms_compliance_summary_json", "before_values_json", "after_values_json", "draft_metadata_json"
 ];
 
 const applicantRedactedFields = [
