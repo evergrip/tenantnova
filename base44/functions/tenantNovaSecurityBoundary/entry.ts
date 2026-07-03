@@ -233,6 +233,19 @@ Deno.serve(async (req) => {
       return Response.json({ applications: applications.filter(Boolean) });
     }
 
+    if (action === "getApplicantPropertyUnitLabels") {
+      const membership = await requireOrganization(base44, user, body.organization_id);
+      if (membership.role !== "Applicant") throw new Error("Applicant access required");
+      const [properties, units] = await Promise.all([
+        base44.asServiceRole.entities.Property.filter({ organization_id: body.organization_id }, "property_name", 100),
+        base44.asServiceRole.entities.Unit.filter({ organization_id: body.organization_id }, "unit_number", 300)
+      ]);
+      return Response.json({
+        properties: properties.filter(isActive).map((property) => ({ id: property.id, label: property.property_name || "Property" })),
+        units: units.filter(isActive).map((unit) => ({ id: unit.id, label: unit.unit_number || "Unit", property_id: unit.property_id }))
+      });
+    }
+
     if (action === "listApplicationDocuments") {
       const result = await authorizeApplication(base44, user, body.application_id);
       if (result.role !== "Applicant" && result.role !== "Admin") throw new Error("Application document access denied");
