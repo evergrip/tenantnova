@@ -31,6 +31,10 @@ import AdminInvestorReports from '@/pages/admin/AdminInvestorReports';
 import AdminInvestorReportDetail from '@/pages/admin/AdminInvestorReportDetail';
 import AdminNotificationCenter from '@/pages/admin/AdminNotificationCenter';
 import AdminTaskQueue from '@/pages/admin/AdminTaskQueue';
+import AdminReadinessDashboard from '@/pages/admin/AdminReadinessDashboard';
+import AdminIntegrationReadiness from '@/pages/admin/AdminIntegrationReadiness';
+import AdminProductionHardening from '@/pages/admin/AdminProductionHardening';
+import AdminSecurityReview from '@/pages/admin/AdminSecurityReview';
 import PropertyPerformanceDashboard from '@/pages/admin/PropertyPerformanceDashboard';
 import TenantDashboard from '@/pages/tenant/TenantDashboard';
 import MyLease from '@/pages/tenant/MyLease';
@@ -94,6 +98,10 @@ const AuthenticatedApp = () => {
         <Route path="/admin/investor-reports/:reportId" element={<AdminInvestorReportDetail />} />
         <Route path="/admin/notifications" element={<AdminNotificationCenter />} />
         <Route path="/admin/tasks" element={<AdminTaskQueue />} />
+        <Route path="/admin/readiness" element={<AdminReadinessDashboard />} />
+        <Route path="/admin/integration-readiness" element={<AdminIntegrationReadiness />} />
+        <Route path="/admin/production-hardening" element={<AdminProductionHardening />} />
+        <Route path="/admin/security-review" element={<AdminSecurityReview />} />
         <Route path="/admin/audit-logs" element={<AuditLogs />} />
         <Route path="/admin/settings" element={<OrganizationSettings />} />
         <Route path="/tenant" element={<TenantDashboard />} />

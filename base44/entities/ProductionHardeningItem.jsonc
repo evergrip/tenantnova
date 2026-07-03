@@ -1,0 +1,111 @@
+{
+  "name": "ProductionHardeningItem",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "hardening_category": {
+      "type": "string",
+      "enum": [
+        "Database Security",
+        "Field-Level Security",
+        "File Storage",
+        "Audit",
+        "Authentication",
+        "Authorization",
+        "Privacy",
+        "Legal",
+        "Financial",
+        "Accounting",
+        "Communications",
+        "Testing",
+        "Deployment",
+        "Backups",
+        "Monitoring",
+        "Incident Response",
+        "Data Retention",
+        "Other"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Blocked",
+        "Needs Review",
+        "Verified",
+        "Not Applicable",
+        "Archived"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ]
+    },
+    "blocks_real_tenant_data_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "blocks_external_communication_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "blocks_payment_processing_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "blocks_legal_notice_use_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "required_evidence": {
+      "type": "string"
+    },
+    "evidence_notes": {
+      "type": "string"
+    },
+    "owner_user_id_nullable": {
+      "type": "string"
+    },
+    "due_date_nullable": {
+      "type": "string",
+      "format": "date"
+    },
+    "verified_by_user_id_nullable": {
+      "type": "string"
+    },
+    "verified_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "hardening_category",
+    "title",
+    "status",
+    "priority",
+    "is_active"
+  ]
+}

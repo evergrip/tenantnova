@@ -1,0 +1,131 @@
+{
+  "name": "IntegrationReadinessItem",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "integration_category": {
+      "type": "string",
+      "enum": [
+        "Payments",
+        "Accounting",
+        "Email",
+        "SMS",
+        "Push",
+        "E-Signature",
+        "File Storage",
+        "Government Forms",
+        "Banking",
+        "Credit Screening",
+        "Background Screening",
+        "Investor Portal",
+        "Vendor Portal",
+        "Other"
+      ]
+    },
+    "integration_name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "intended_use": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "Researching",
+        "Planned",
+        "Blocked",
+        "Ready for Technical Review",
+        "Approved for Build Later",
+        "Rejected",
+        "Archived"
+      ]
+    },
+    "risk_level": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ]
+    },
+    "handles_sensitive_data_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "handles_money_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "handles_legal_notice_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "handles_personal_information_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "external_vendor_name_nullable": {
+      "type": "string"
+    },
+    "vendor_review_required_boolean": {
+      "type": "boolean",
+      "default": true
+    },
+    "legal_review_required_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "privacy_review_required_boolean": {
+      "type": "boolean",
+      "default": true
+    },
+    "financial_review_required_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "security_review_required_boolean": {
+      "type": "boolean",
+      "default": true
+    },
+    "production_approval_required_boolean": {
+      "type": "boolean",
+      "default": true
+    },
+    "notes": {
+      "type": "string"
+    },
+    "blocker_reason_nullable": {
+      "type": "string"
+    },
+    "reviewed_by_user_id_nullable": {
+      "type": "string"
+    },
+    "reviewed_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "integration_category",
+    "integration_name",
+    "status",
+    "risk_level",
+    "is_active"
+  ]
+}

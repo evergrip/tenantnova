@@ -11,8 +11,11 @@ export default function TenantNovaLayout() {
   useEffect(() => { resolveTenantNovaAccess().then(setAccess); }, []);
   useEffect(() => {
     if (access?.status !== "ready" || !location.pathname.startsWith("/admin")) return;
-    const isCommandCenterPath = location.pathname.startsWith("/admin/notifications") || location.pathname.startsWith("/admin/tasks");
-    if (isCommandCenterPath && !access.isCommandCenterUser) {
+    const isReadinessPath = location.pathname.startsWith("/admin/readiness") || location.pathname.startsWith("/admin/integration-readiness") || location.pathname.startsWith("/admin/production-hardening") || location.pathname.startsWith("/admin/security-review");
+    const isCommandCenterPath = location.pathname.startsWith("/admin/notifications") || location.pathname.startsWith("/admin/tasks") || isReadinessPath;
+    if (isReadinessPath && !access.isCommandCenterUser) {
+      createAuditLog({ organizationId: access.organization.id, user: access.user, role: access.membership?.role, action: "Unauthorized readiness access attempt", entityType: "ReadinessControlRoom", entityId: "readiness-access", reason: "Non-admin/staff attempted to access Phase 1J readiness screens" });
+    } else if (isCommandCenterPath && !access.isCommandCenterUser) {
       createAuditLog({ organizationId: access.organization.id, user: access.user, role: access.membership?.role, action: "Unauthorized notification/task access attempt", entityType: "InternalCommandCenter", entityId: "notification-task-access", reason: "Non-admin/staff attempted to access Phase 1I notification or task queue" });
     } else if (!isCommandCenterPath && !access.isAdmin) {
       createAuditLog({ organizationId: access.organization.id, user: access.user, role: access.membership?.role, action: "Unauthorized dashboard access attempt", entityType: "OperationalDashboard", entityId: "admin-dashboard", reason: "Non-admin attempted to access admin operational dashboard" });
@@ -24,9 +27,9 @@ export default function TenantNovaLayout() {
 
   const adminLinks = [
     ["/admin", "Dashboard"], ["/admin/properties", "Properties & Units"], ["/admin/tenants-leases", "Tenants & Leases"],
-    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/maintenance", "Maintenance"], ["/admin/inspections", "Inspections"], ["/admin/applications", "Applications"], ["/admin/forms-library", "Forms Library"], ["/admin/compliance-rules", "Compliance Rules"], ["/admin/form-workflows", "Form Workflows"], ["/admin/investor-reports", "Investor Reports"], ["/admin/notifications", "Notification Center"], ["/admin/tasks", "Task Queue"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
+    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/maintenance", "Maintenance"], ["/admin/inspections", "Inspections"], ["/admin/applications", "Applications"], ["/admin/forms-library", "Forms Library"], ["/admin/compliance-rules", "Compliance Rules"], ["/admin/form-workflows", "Form Workflows"], ["/admin/investor-reports", "Investor Reports"], ["/admin/notifications", "Notification Center"], ["/admin/tasks", "Task Queue"], ["/admin/readiness", "Readiness Dashboard"], ["/admin/integration-readiness", "Integration Readiness"], ["/admin/production-hardening", "Production Hardening"], ["/admin/security-review", "Security Review"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
   ];
-  const commandCenterLinks = [["/admin/notifications", "Notification Center"], ["/admin/tasks", "Task Queue"]];
+  const commandCenterLinks = [["/admin/notifications", "Notification Center"], ["/admin/tasks", "Task Queue"], ["/admin/readiness", "Readiness Dashboard"], ["/admin/integration-readiness", "Integration Readiness"], ["/admin/production-hardening", "Production Hardening"], ["/admin/security-review", "Security Review"]];
   const tenantLinks = [["/tenant", "Dashboard"], ["/tenant/lease", "My Lease"], ["/tenant/ledger", "Rent Ledger & Payments"], ["/tenant/documents", "Documents"], ["/tenant/maintenance", "Maintenance"], ["/tenant/inspections", "Inspections"], ["/tenant/forms-notices", "Forms & Notices"], ["/tenant/profile", "Profile"], ["/tenant/contact", "Contact Manager"]];
   const applicantLinks = [["/applicant/application", "My Application"]];
   const links = access.isAdmin ? adminLinks : access.isCommandCenterUser ? commandCenterLinks : access.isTenant && access.isApplicant ? [...tenantLinks, ...applicantLinks] : access.isApplicant ? applicantLinks : tenantLinks;
@@ -41,7 +44,8 @@ export default function TenantNovaLayout() {
     ? { ...access, organization_id: access.organization.id, organization: tenantSafeOrganization }
     : { ...access, organization_id: access.organization.id };
 
-  const isCommandCenterPath = location.pathname.startsWith("/admin/notifications") || location.pathname.startsWith("/admin/tasks");
+  const isReadinessPath = location.pathname.startsWith("/admin/readiness") || location.pathname.startsWith("/admin/integration-readiness") || location.pathname.startsWith("/admin/production-hardening") || location.pathname.startsWith("/admin/security-review");
+  const isCommandCenterPath = location.pathname.startsWith("/admin/notifications") || location.pathname.startsWith("/admin/tasks") || isReadinessPath;
   if (location.pathname.startsWith("/admin") && (isCommandCenterPath ? !access.isCommandCenterUser : !access.isAdmin)) return <AccessDenied />;
   if (location.pathname.startsWith("/tenant") && !access.isTenant && !access.isAdmin) return <AccessDenied />;
   if (location.pathname.startsWith("/applicant") && !access.isApplicant) return <AccessDenied />;

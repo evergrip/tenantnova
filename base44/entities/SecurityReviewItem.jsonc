@@ -1,0 +1,110 @@
+{
+  "name": "SecurityReviewItem",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "review_area": {
+      "type": "string",
+      "enum": [
+        "RLS",
+        "Authorization",
+        "Authentication",
+        "Field Redaction",
+        "File Access",
+        "AuditLog",
+        "API Access",
+        "Routing",
+        "Data Validation",
+        "Secrets",
+        "Error Handling",
+        "Dependency Review",
+        "GitHub Code Review",
+        "Other"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Critical"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Open",
+        "In Review",
+        "Fixed",
+        "Accepted Risk",
+        "Not Applicable",
+        "Archived"
+      ]
+    },
+    "affected_module": {
+      "type": "string"
+    },
+    "affected_entity_nullable": {
+      "type": "string"
+    },
+    "affected_file_path_nullable": {
+      "type": "string"
+    },
+    "evidence_required": {
+      "type": "string"
+    },
+    "evidence_notes": {
+      "type": "string"
+    },
+    "recommended_fix": {
+      "type": "string"
+    },
+    "blocks_production_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "blocks_real_data_boolean": {
+      "type": "boolean",
+      "default": false
+    },
+    "created_by_user_id_nullable": {
+      "type": "string"
+    },
+    "assigned_to_user_id_nullable": {
+      "type": "string"
+    },
+    "reviewed_by_user_id_nullable": {
+      "type": "string"
+    },
+    "reviewed_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "review_area",
+    "title",
+    "severity",
+    "status",
+    "affected_module",
+    "is_active"
+  ]
+}
