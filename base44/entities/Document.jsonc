@@ -1,0 +1,112 @@
+{
+  "name": "Document",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id_nullable": {
+      "type": "string"
+    },
+    "unit_id_nullable": {
+      "type": "string"
+    },
+    "lease_id_nullable": {
+      "type": "string"
+    },
+    "tenant_id_nullable": {
+      "type": "string"
+    },
+    "financial_ledger_entry_id_nullable": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "ID",
+        "Income Proof",
+        "Credit Background Check",
+        "Insurance",
+        "Lease",
+        "Addendum",
+        "Inspection",
+        "Notice",
+        "Form",
+        "Receipt",
+        "Maintenance",
+        "Investor Report",
+        "Internal",
+        "Other"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "file_url_or_storage_reference": {
+      "type": "string"
+    },
+    "uploaded_by_user_id": {
+      "type": "string"
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "Tenant Only",
+        "Shared With Tenant",
+        "Admin Only",
+        "Internal",
+        "Investor Aggregate"
+      ]
+    },
+    "version": {
+      "type": "number",
+      "default": 1
+    },
+    "expiry_date_nullable": {
+      "type": "string",
+      "format": "date"
+    },
+    "requires_signature": {
+      "type": "boolean",
+      "default": false
+    },
+    "signature_status": {
+      "type": "string",
+      "enum": [
+        "Not Required",
+        "Pending",
+        "Signed",
+        "Declined",
+        "Expired"
+      ],
+      "default": "Not Required"
+    },
+    "replaced_by_document_id_nullable": {
+      "type": "string"
+    },
+    "tenant_visible_note": {
+      "type": "string"
+    },
+    "internal_admin_note": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "category",
+    "title",
+    "file_url_or_storage_reference",
+    "uploaded_by_user_id",
+    "visibility",
+    "version",
+    "signature_status"
+  ]
+}
