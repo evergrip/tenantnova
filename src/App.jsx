@@ -24,6 +24,9 @@ import AdminMaintenance from '@/pages/admin/AdminMaintenance';
 import AdminInspections from '@/pages/admin/AdminInspections';
 import AdminApplications from '@/pages/admin/AdminApplications';
 import AdminApplicationDetail from '@/pages/admin/AdminApplicationDetail';
+import AdminFormsLibrary from '@/pages/admin/AdminFormsLibrary';
+import AdminComplianceRules from '@/pages/admin/AdminComplianceRules';
+import AdminFormWorkflowRules from '@/pages/admin/AdminFormWorkflowRules';
 import TenantDashboard from '@/pages/tenant/TenantDashboard';
 import MyLease from '@/pages/tenant/MyLease';
 import Profile from '@/pages/tenant/Profile';
@@ -32,6 +35,7 @@ import Documents from '@/pages/tenant/Documents';
 import TenantMaintenance from '@/pages/tenant/TenantMaintenance';
 import TenantInspections from '@/pages/tenant/TenantInspections';
 import ContactManager from '@/pages/tenant/ContactManager';
+import FormsNotices from '@/pages/tenant/FormsNotices';
 import MyApplication from '@/pages/applicant/MyApplication';
 // Add page imports here
 
@@ -77,6 +81,9 @@ const AuthenticatedApp = () => {
         <Route path="/admin/inspections" element={<AdminInspections />} />
         <Route path="/admin/applications" element={<AdminApplications />} />
         <Route path="/admin/applications/:applicationId" element={<AdminApplicationDetail />} />
+        <Route path="/admin/forms-library" element={<AdminFormsLibrary />} />
+        <Route path="/admin/compliance-rules" element={<AdminComplianceRules />} />
+        <Route path="/admin/form-workflows" element={<AdminFormWorkflowRules />} />
         <Route path="/admin/audit-logs" element={<AuditLogs />} />
         <Route path="/admin/settings" element={<OrganizationSettings />} />
         <Route path="/tenant" element={<TenantDashboard />} />
@@ -85,6 +92,7 @@ const AuthenticatedApp = () => {
         <Route path="/tenant/documents" element={<Documents />} />
         <Route path="/tenant/maintenance" element={<TenantMaintenance />} />
         <Route path="/tenant/inspections" element={<TenantInspections />} />
+        <Route path="/tenant/forms-notices" element={<FormsNotices />} />
         <Route path="/tenant/profile" element={<Profile />} />
         <Route path="/tenant/contact" element={<ContactManager />} />
         <Route path="/applicant/application" element={<MyApplication />} />

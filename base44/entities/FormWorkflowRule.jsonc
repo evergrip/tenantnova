@@ -1,0 +1,81 @@
+{
+  "name": "FormWorkflowRule",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "workflow_name": {
+      "type": "string"
+    },
+    "trigger_event": {
+      "type": "string"
+    },
+    "user_role": {
+      "type": "string",
+      "enum": [
+        "Tenant",
+        "Admin",
+        "Both"
+      ]
+    },
+    "question_prompt": {
+      "type": "string"
+    },
+    "answer_options_json": {
+      "type": "object"
+    },
+    "decision_logic_json": {
+      "type": "object"
+    },
+    "resulting_form_code_nullable": {
+      "type": "string"
+    },
+    "resulting_action": {
+      "type": "string"
+    },
+    "required_admin_review_boolean": {
+      "type": "boolean",
+      "default": true
+    },
+    "legal_warning": {
+      "type": "string"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "Unverified",
+        "Needs Review",
+        "Verified",
+        "Archived"
+      ],
+      "default": "Unverified"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "province",
+    "workflow_name",
+    "trigger_event",
+    "user_role",
+    "question_prompt",
+    "answer_options_json",
+    "decision_logic_json",
+    "resulting_action",
+    "required_admin_review_boolean",
+    "legal_warning",
+    "verification_status",
+    "is_active"
+  ]
+}

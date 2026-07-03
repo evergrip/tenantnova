@@ -1,0 +1,117 @@
+{
+  "name": "ComplianceRule",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "rule_category": {
+      "type": "string",
+      "enum": [
+        "Security Deposit",
+        "Rent Increase",
+        "Late Fee",
+        "Notice Period",
+        "Lease Conversion",
+        "Notice to Quit",
+        "Service",
+        "Deposit Return",
+        "Application",
+        "Other"
+      ]
+    },
+    "rule_name": {
+      "type": "string"
+    },
+    "rule_description": {
+      "type": "string"
+    },
+    "applies_to_lease_type": {
+      "type": "string",
+      "enum": [
+        "Fixed Term",
+        "Year-to-Year",
+        "Month-to-Month",
+        "Week-to-Week",
+        "All"
+      ]
+    },
+    "trigger_event": {
+      "type": "string"
+    },
+    "required_notice_days_nullable": {
+      "type": "number"
+    },
+    "required_notice_months_nullable": {
+      "type": "number"
+    },
+    "maximum_amount_type": {
+      "type": "string",
+      "enum": [
+        "Flat",
+        "Percentage",
+        "Half Month Rent",
+        "Other",
+        "None"
+      ]
+    },
+    "maximum_amount_value_nullable": {
+      "type": "number"
+    },
+    "calculation_method": {
+      "type": "string"
+    },
+    "related_form_code_nullable": {
+      "type": "string"
+    },
+    "official_source_url": {
+      "type": "string"
+    },
+    "version_or_effective_date": {
+      "type": "string"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "Unverified",
+        "Needs Review",
+        "Verified",
+        "Archived"
+      ],
+      "default": "Unverified"
+    },
+    "verified_by_user_id_nullable": {
+      "type": "string"
+    },
+    "verified_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "admin_warning": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "province",
+    "rule_category",
+    "rule_name",
+    "applies_to_lease_type",
+    "trigger_event",
+    "maximum_amount_type",
+    "verification_status",
+    "admin_warning",
+    "is_active"
+  ]
+}

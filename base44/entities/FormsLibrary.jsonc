@@ -1,0 +1,101 @@
+{
+  "name": "FormsLibrary",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "province": {
+      "type": "string"
+    },
+    "form_code": {
+      "type": "string"
+    },
+    "form_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Lease",
+        "Notice",
+        "Rent Increase",
+        "Deposit",
+        "Dispute",
+        "Service",
+        "Inspection",
+        "Application",
+        "Termination",
+        "Other"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "official_source_url": {
+      "type": "string"
+    },
+    "version_or_effective_date": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "who_can_use": {
+      "type": "string",
+      "enum": [
+        "Tenant",
+        "Admin",
+        "Both"
+      ]
+    },
+    "template_file_reference_nullable": {
+      "type": "string"
+    },
+    "fillable_field_schema_json": {
+      "type": "object"
+    },
+    "usage_notes": {
+      "type": "string"
+    },
+    "workflow_trigger": {
+      "type": "string"
+    },
+    "legal_warning": {
+      "type": "string"
+    },
+    "verified_by_user_id_nullable": {
+      "type": "string"
+    },
+    "verified_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "Unverified",
+        "Needs Review",
+        "Verified",
+        "Archived"
+      ],
+      "default": "Unverified"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "province",
+    "form_code",
+    "form_name",
+    "category",
+    "who_can_use",
+    "legal_warning",
+    "verification_status",
+    "is_active"
+  ]
+}

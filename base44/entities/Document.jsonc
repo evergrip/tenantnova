@@ -93,6 +93,16 @@
     "internal_admin_note": {
       "type": "string"
     },
+    "generated_by_user_id": {
+      "type": "string"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "draft_metadata_json": {
+      "type": "object"
+    },
     "is_active": {
       "type": "boolean",
       "default": true
