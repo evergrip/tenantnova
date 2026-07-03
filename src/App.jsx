@@ -17,6 +17,7 @@ import OrganizationSettings from '@/pages/admin/OrganizationSettings';
 import PortfolioLedger from '@/pages/admin/PortfolioLedger';
 import LeaseLedgerDetail from '@/pages/admin/LeaseLedgerDetail';
 import ArrearsView from '@/pages/admin/ArrearsView';
+import AdminMaintenance from '@/pages/admin/Maintenance';
 import DocumentCenter from '@/pages/admin/DocumentCenter';
 import LeaseDocuments from '@/pages/admin/LeaseDocuments';
 import TenantDocuments from '@/pages/admin/TenantDocuments';
@@ -24,6 +25,7 @@ import TenantDashboard from '@/pages/tenant/TenantDashboard';
 import MyLease from '@/pages/tenant/MyLease';
 import Profile from '@/pages/tenant/Profile';
 import TenantLedger from '@/pages/tenant/TenantLedger';
+import TenantMaintenance from '@/pages/tenant/Maintenance';
 import Documents from '@/pages/tenant/Documents';
 import ContactManager from '@/pages/tenant/ContactManager';
 // Add page imports here
@@ -63,6 +65,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/ledger" element={<PortfolioLedger />} />
         <Route path="/admin/ledger/lease/:leaseId" element={<LeaseLedgerDetail />} />
         <Route path="/admin/arrears" element={<ArrearsView />} />
+        <Route path="/admin/maintenance" element={<AdminMaintenance />} />
         <Route path="/admin/documents" element={<DocumentCenter />} />
         <Route path="/admin/documents/lease/:leaseId" element={<LeaseDocuments />} />
         <Route path="/admin/documents/tenant/:tenantId" element={<TenantDocuments />} />
@@ -71,6 +74,7 @@ const AuthenticatedApp = () => {
         <Route path="/tenant" element={<TenantDashboard />} />
         <Route path="/tenant/lease" element={<MyLease />} />
         <Route path="/tenant/ledger" element={<TenantLedger />} />
+        <Route path="/tenant/maintenance" element={<TenantMaintenance />} />
         <Route path="/tenant/documents" element={<Documents />} />
         <Route path="/tenant/profile" element={<Profile />} />
         <Route path="/tenant/contact" element={<ContactManager />} />

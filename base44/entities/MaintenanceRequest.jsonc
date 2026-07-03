@@ -1,0 +1,131 @@
+{
+  "name": "MaintenanceRequest",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "lease_id": {
+      "type": "string"
+    },
+    "tenant_id": {
+      "type": "string"
+    },
+    "submitted_by_user_id": {
+      "type": "string"
+    },
+    "request_number": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Plumbing",
+        "Electrical",
+        "Heating",
+        "Appliance",
+        "Pest",
+        "Safety",
+        "General",
+        "Other"
+      ],
+      "default": "General"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Low",
+        "Medium",
+        "High",
+        "Emergency"
+      ],
+      "default": "Medium"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Submitted",
+        "Under Review",
+        "Scheduled",
+        "In Progress",
+        "Waiting On Tenant",
+        "Completed",
+        "Closed",
+        "Cancelled"
+      ],
+      "default": "Submitted"
+    },
+    "permission_to_enter": {
+      "type": "boolean",
+      "default": false
+    },
+    "access_instructions": {
+      "type": "string"
+    },
+    "preferred_contact_method": {
+      "type": "string",
+      "enum": [
+        "Portal",
+        "Email",
+        "Phone",
+        "Text"
+      ],
+      "default": "Portal"
+    },
+    "tenant_available_times": {
+      "type": "string"
+    },
+    "photos_array": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "vendor_name": {
+      "type": "string"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "tenant_visible_resolution_notes": {
+      "type": "string"
+    },
+    "admin_internal_notes": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_id",
+    "unit_id",
+    "lease_id",
+    "tenant_id",
+    "submitted_by_user_id",
+    "title",
+    "description",
+    "category",
+    "priority",
+    "status"
+  ]
+}
