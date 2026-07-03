@@ -1,0 +1,5 @@
+import React from "react";
+
+export default function LedgerTable({ entries, showInternal = false, onReverse }) {
+  return <div className="overflow-hidden rounded-2xl border bg-white"><table className="w-full text-left text-sm"><thead className="bg-slate-100"><tr><th className="p-3">Date</th><th>Type</th><th>Status</th><th>Debit/Credit</th><th>Amount</th><th>Note</th>{showInternal && <th>Internal</th>}{onReverse && <th>Action</th>}</tr></thead><tbody>{entries.map(e => <tr key={e.id} className="border-t"><td className="p-3">{e.effective_date}</td><td>{e.entry_type}</td><td><span className="rounded-full bg-slate-100 px-2 py-1 text-xs">{e.status}</span></td><td>{e.debit_credit_type}</td><td>${Number(e.amount || 0).toFixed(2)}</td><td>{e.tenant_visible_note}</td>{showInternal && <td className="text-slate-500">{e.internal_admin_note}</td>}{onReverse && <td>{e.status === "Posted" ? <button onClick={() => onReverse(e)} className="text-red-600">Reverse</button> : <span className="text-slate-400">—</span>}</td>}</tr>)}{entries.length === 0 && <tr><td colSpan="8" className="p-8 text-center text-slate-500">No ledger entries yet.</td></tr>}</tbody></table></div>;
+}

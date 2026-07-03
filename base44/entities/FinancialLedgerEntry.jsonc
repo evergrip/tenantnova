@@ -1,0 +1,111 @@
+{
+  "name": "FinancialLedgerEntry",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "lease_id": {
+      "type": "string"
+    },
+    "tenant_id": {
+      "type": "string"
+    },
+    "entry_type": {
+      "type": "string",
+      "enum": [
+        "Rent Charge",
+        "Payment",
+        "Security Deposit",
+        "Late Fee",
+        "Adjustment",
+        "Refund",
+        "NSF Fee",
+        "Damage Charge",
+        "Other"
+      ]
+    },
+    "amount": {
+      "type": "number"
+    },
+    "debit_credit_type": {
+      "type": "string",
+      "enum": [
+        "Debit",
+        "Credit"
+      ]
+    },
+    "effective_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "due_date_optional": {
+      "type": "string",
+      "format": "date"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "Manual",
+        "E-transfer",
+        "Cheque",
+        "Cash",
+        "Card Placeholder",
+        "PAD Placeholder",
+        "Other"
+      ],
+      "default": "Manual"
+    },
+    "external_reference_optional": {
+      "type": "string"
+    },
+    "receipt_reference_optional": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Pending",
+        "Posted",
+        "Failed",
+        "Reversed",
+        "Refunded"
+      ],
+      "default": "Posted"
+    },
+    "tenant_visible_note": {
+      "type": "string"
+    },
+    "internal_admin_note": {
+      "type": "string"
+    },
+    "reversal_entry_id_nullable": {
+      "type": "string"
+    },
+    "created_by_user_id": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_id",
+    "unit_id",
+    "lease_id",
+    "tenant_id",
+    "entry_type",
+    "amount",
+    "debit_credit_type",
+    "effective_date",
+    "status"
+  ]
+}

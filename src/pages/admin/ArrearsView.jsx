@@ -1,0 +1,12 @@
+import React, { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { base44 } from "@/api/base44Client";
+import { activeOnly } from "@/lib/tenantNova";
+import { agingBucket, calculateLeaseBalance } from "@/lib/ledger";
+
+export default function ArrearsView() {
+  const access = useOutletContext(), org = access.organization.id;
+  const [rows, setRows] = useState([]);
+  useEffect(() => { async function load() { const [entries, leases, tenants, properties, units] = await Promise.all([base44.entities.FinancialLedgerEntry.filter({ organization_id: org }), base44.entities.Lease.filter({ organization_id: org }), base44.entities.Tenant.filter({ organization_id: org }), base44.entities.Property.filter({ organization_id: org }), base44.entities.Unit.filter({ organization_id: org })]); const cleanEntries = entries.filter(activeOnly); setRows(leases.filter(activeOnly).map(lease => { const leaseEntries = cleanEntries.filter(e => e.lease_id === lease.id); const balance = calculateLeaseBalance(leaseEntries); const oldest = leaseEntries.filter(e => e.status === "Posted" && e.debit_credit_type === "Debit" && e.due_date_optional).sort((a,b) => a.due_date_optional.localeCompare(b.due_date_optional))[0]?.due_date_optional; return { lease, balance, oldest, tenant: tenants.find(t => t.id === lease.primary_tenant_id), property: properties.find(p => p.id === lease.property_id), unit: units.find(u => u.id === lease.unit_id), bucket: agingBucket(balance, oldest) }; })); } load(); }, []);
+  return <section><h1 className="text-3xl font-bold">Basic Arrears View</h1><p className="mt-2 text-slate-600">Starter view only, calculated from posted ledger entries.</p><div className="mt-6 overflow-hidden rounded-2xl border bg-white"><table className="w-full text-left text-sm"><thead className="bg-slate-100"><tr><th className="p-3">Lease</th><th>Tenant</th><th>Property</th><th>Unit</th><th>Balance</th><th>Oldest due</th><th>Bucket</th></tr></thead><tbody>{rows.map(r => <tr key={r.lease.id} className="border-t"><td className="p-3">{r.lease.lease_status}</td><td>{r.tenant ? `${r.tenant.first_name} ${r.tenant.last_name}` : "—"}</td><td>{r.property?.property_name || "—"}</td><td>{r.unit?.unit_number || "—"}</td><td>${r.balance.toFixed(2)}</td><td>{r.oldest || "—"}</td><td><span className="rounded-full bg-amber-100 px-2 py-1 text-xs text-amber-800">{r.bucket}</span></td></tr>)}</tbody></table></div></section>;
+}

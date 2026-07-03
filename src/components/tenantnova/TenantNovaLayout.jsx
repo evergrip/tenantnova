@@ -15,10 +15,20 @@ export default function TenantNovaLayout() {
 
   const adminLinks = [
     ["/admin", "Dashboard"], ["/admin/properties", "Properties & Units"], ["/admin/tenants-leases", "Tenants & Leases"],
-    ["/admin/lease-participants", "Lease Participants"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
+    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
   ];
-  const tenantLinks = [["/tenant", "Dashboard"], ["/tenant/lease", "My Lease"], ["/tenant/profile", "Profile"], ["/tenant/contact", "Contact Manager"]];
+  const tenantLinks = [["/tenant", "Dashboard"], ["/tenant/lease", "My Lease"], ["/tenant/ledger", "Rent Ledger & Payments"], ["/tenant/profile", "Profile"], ["/tenant/contact", "Contact Manager"]];
   const links = access.isAdmin ? adminLinks : tenantLinks;
+  const tenantSafeOrganization = access.organization ? {
+    organization_name: access.organization.name,
+    logo: access.organization.logo,
+    primary_color: access.organization.primary_color,
+    support_email: access.organization.support_email,
+    support_phone: access.organization.support_phone
+  } : null;
+  const outletAccess = access.isTenant
+    ? { ...access, organization_id: access.organization.id, organization: tenantSafeOrganization }
+    : { ...access, organization_id: access.organization.id };
 
   if (location.pathname.startsWith("/admin") && !access.isAdmin) return <AccessDenied />;
   if (location.pathname.startsWith("/tenant") && !access.isTenant && !access.isAdmin) return <AccessDenied />;
@@ -31,7 +41,7 @@ export default function TenantNovaLayout() {
       </nav>
       <button onClick={() => base44.auth.logout("/login")} className="hidden items-center gap-2 px-6 py-3 text-sm text-slate-500 lg:flex"><LogOut size={16} /> Sign out</button>
     </aside>
-    <main className="px-4 pb-10 pt-24 lg:ml-72 lg:p-8"><Outlet context={access} /></main>
+    <main className="px-4 pb-10 pt-24 lg:ml-72 lg:p-8"><Outlet context={outletAccess} /></main>
   </div>;
 }
 
