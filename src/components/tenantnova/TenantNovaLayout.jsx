@@ -3,12 +3,25 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Building2, Home, KeyRound, LogOut, ShieldAlert } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { createAuditLog, resolveTenantNovaAccess } from "@/lib/tenantNova";
+import { useAuth } from "@/lib/AuthContext";
 
 export default function TenantNovaLayout() {
   const [access, setAccess] = useState(null);
   const location = useLocation();
+  const { isAuthenticated, authChecked, navigateToLogin } = useAuth();
 
-  useEffect(() => { resolveTenantNovaAccess().then(setAccess); }, []);
+  useEffect(() => {
+    if (!authChecked) return;
+    if (!isAuthenticated) {
+      navigateToLogin();
+      return;
+    }
+    let cancelled = false;
+    resolveTenantNovaAccess()
+      .then((nextAccess) => { if (!cancelled) setAccess(nextAccess); })
+      .catch(() => { if (!cancelled) setAccess({ status: "error" }); });
+    return () => { cancelled = true; };
+  }, [authChecked, isAuthenticated, navigateToLogin]);
   useEffect(() => {
     if (access?.status !== "ready" || !location.pathname.startsWith("/admin")) return;
     const isReadinessPath = location.pathname.startsWith("/admin/readiness") || location.pathname.startsWith("/admin/integration-readiness") || location.pathname.startsWith("/admin/production-hardening") || location.pathname.startsWith("/admin/security-review");
@@ -23,6 +36,7 @@ export default function TenantNovaLayout() {
   }, [access?.status, access?.isAdmin, access?.isCommandCenterUser, location.pathname]);
 
   if (!access) return <div className="min-h-screen grid place-items-center bg-slate-50"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-teal-700" /></div>;
+  if (access.status === "error") return <AccessLoadError />;
   if (access.status === "no_membership") return <NoMembership />;
 
   const adminLinks = [
@@ -64,6 +78,10 @@ export default function TenantNovaLayout() {
 
 function NoMembership() {
   return <div className="min-h-screen grid place-items-center bg-slate-50 p-6"><div className="max-w-lg rounded-2xl border bg-white p-8 text-center shadow-sm"><KeyRound className="mx-auto mb-4 text-teal-700" /><h1 className="text-2xl font-bold">Access not configured</h1><p className="mt-3 text-slate-600">Your account does not have an active TenantNova organization membership, so no organization data is shown.</p><Link to="/login" className="mt-6 inline-block rounded-xl bg-teal-700 px-4 py-2 text-white">Back to login</Link></div></div>;
+}
+
+function AccessLoadError() {
+  return <div className="min-h-screen grid place-items-center bg-slate-50 p-6"><div className="max-w-lg rounded-2xl border bg-white p-8 text-center shadow-sm"><ShieldAlert className="mx-auto mb-4 text-red-600" /><h1 className="text-2xl font-bold">Unable to load access</h1><p className="mt-3 text-slate-600">Please sign in again or contact an administrator to confirm your TenantNova membership.</p><button onClick={() => base44.auth.redirectToLogin(window.location.href)} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal-700 px-4 py-2 text-white">Sign in again</button></div></div>;
 }
 
 function AccessDenied() {
