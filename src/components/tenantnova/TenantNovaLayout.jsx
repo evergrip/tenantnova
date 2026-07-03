@@ -15,7 +15,7 @@ export default function TenantNovaLayout() {
 
   const adminLinks = [
     ["/admin", "Dashboard"], ["/admin/properties", "Properties & Units"], ["/admin/tenants-leases", "Tenants & Leases"],
-    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/maintenance", "Maintenance"], ["/admin/inspections", "Inspections"], ["/admin/applications", "Applications"], ["/admin/forms-library", "Forms Library"], ["/admin/compliance-rules", "Compliance Rules"], ["/admin/form-workflows", "Form Workflows"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
+    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/maintenance", "Maintenance"], ["/admin/inspections", "Inspections"], ["/admin/applications", "Applications"], ["/admin/forms-library", "Forms Library"], ["/admin/compliance-rules", "Compliance Rules"], ["/admin/form-workflows", "Form Workflows"], ["/admin/investor-reports", "Investor Reports"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
   ];
   const tenantLinks = [["/tenant", "Dashboard"], ["/tenant/lease", "My Lease"], ["/tenant/ledger", "Rent Ledger & Payments"], ["/tenant/documents", "Documents"], ["/tenant/maintenance", "Maintenance"], ["/tenant/inspections", "Inspections"], ["/tenant/forms-notices", "Forms & Notices"], ["/tenant/profile", "Profile"], ["/tenant/contact", "Contact Manager"]];
   const applicantLinks = [["/applicant/application", "My Application"]];

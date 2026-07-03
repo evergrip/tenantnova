@@ -1,0 +1,157 @@
+{
+  "name": "InvestorReport",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "report_period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "report_period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "report_type": {
+      "type": "string",
+      "enum": [
+        "Monthly",
+        "Quarterly",
+        "Annual",
+        "Custom"
+      ]
+    },
+    "report_status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Reviewed",
+        "Exported",
+        "Archived"
+      ],
+      "default": "Draft"
+    },
+    "generated_by_user_id": {
+      "type": "string"
+    },
+    "reviewed_by_user_id_nullable": {
+      "type": "string"
+    },
+    "exported_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "investor_summary_text": {
+      "type": "string"
+    },
+    "property_snapshot_json": {
+      "type": "object"
+    },
+    "occupancy_rate": {
+      "type": "number"
+    },
+    "total_units": {
+      "type": "number"
+    },
+    "occupied_units": {
+      "type": "number"
+    },
+    "vacant_units": {
+      "type": "number"
+    },
+    "gross_rent_charged": {
+      "type": "number"
+    },
+    "rent_collected": {
+      "type": "number"
+    },
+    "rent_outstanding": {
+      "type": "number"
+    },
+    "arrears_amount": {
+      "type": "number"
+    },
+    "security_deposits_held": {
+      "type": "number"
+    },
+    "other_income": {
+      "type": "number"
+    },
+    "operating_expenses": {
+      "type": "number"
+    },
+    "repairs_maintenance": {
+      "type": "number"
+    },
+    "utilities": {
+      "type": "number"
+    },
+    "insurance": {
+      "type": "number"
+    },
+    "property_taxes": {
+      "type": "number"
+    },
+    "mortgage_debt_service_optional": {
+      "type": "number"
+    },
+    "NOI": {
+      "type": "number"
+    },
+    "cash_flow_after_debt_optional": {
+      "type": "number"
+    },
+    "maintenance_summary_json": {
+      "type": "object"
+    },
+    "leasing_summary_json": {
+      "type": "object"
+    },
+    "inspection_summary_json": {
+      "type": "object"
+    },
+    "application_summary_json": {
+      "type": "object"
+    },
+    "forms_compliance_summary_json": {
+      "type": "object"
+    },
+    "risk_notes": {
+      "type": "string"
+    },
+    "next_steps": {
+      "type": "string"
+    },
+    "capex_notes": {
+      "type": "string"
+    },
+    "internal_admin_note": {
+      "type": "string"
+    },
+    "attached_document_id_nullable": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_id",
+    "report_period_start",
+    "report_period_end",
+    "report_type",
+    "report_status",
+    "generated_by_user_id",
+    "is_active"
+  ]
+}
