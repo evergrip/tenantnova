@@ -3,6 +3,7 @@ import { activeOnly, canTenantUseParticipant, createAuditLog } from "@/lib/tenan
 
 export const entryTypes = ["Rent Charge", "Payment", "Security Deposit", "Late Fee", "Adjustment", "Refund", "NSF Fee", "Damage Charge", "Other"];
 export const methods = ["Manual", "E-transfer", "Cheque", "Cash", "Card Placeholder", "PAD Placeholder", "Other"];
+export const methodLabel = (method) => method === "Card Placeholder" ? "Card Placeholder - Not Active" : method === "PAD Placeholder" ? "PAD Placeholder - Not Active" : method;
 export const statuses = ["Pending", "Posted", "Failed", "Reversed", "Refunded"];
 
 export function calculateLeaseBalance(entries) {

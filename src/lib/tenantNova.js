@@ -27,6 +27,7 @@ export async function resolveTenantNovaAccess() {
   let memberships = await base44.entities.OrganizationMembership.filter({ user_id: user.id, is_active: true });
   memberships = memberships.filter(activeOnly);
 
+  // Prototype bootstrap only. Replace with controlled admin provisioning before production.
   if (memberships.length === 0 && user.role === "admin") {
     let orgs = await base44.entities.Organization.list("-created_date", 1);
     orgs = orgs.filter(activeOnly);
