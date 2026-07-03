@@ -29,6 +29,7 @@ import AdminComplianceRules from '@/pages/admin/AdminComplianceRules';
 import AdminFormWorkflowRules from '@/pages/admin/AdminFormWorkflowRules';
 import AdminInvestorReports from '@/pages/admin/AdminInvestorReports';
 import AdminInvestorReportDetail from '@/pages/admin/AdminInvestorReportDetail';
+import PropertyPerformanceDashboard from '@/pages/admin/PropertyPerformanceDashboard';
 import TenantDashboard from '@/pages/tenant/TenantDashboard';
 import MyLease from '@/pages/tenant/MyLease';
 import Profile from '@/pages/tenant/Profile';
@@ -70,6 +71,7 @@ const AuthenticatedApp = () => {
       <Route element={<TenantNovaLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin/operational-dashboard/property/:propertyId" element={<PropertyPerformanceDashboard />} />
         <Route path="/admin/properties" element={<PropertiesUnits />} />
         <Route path="/admin/tenants-leases" element={<TenantsLeases />} />
         <Route path="/admin/lease-participants" element={<LeaseParticipants />} />

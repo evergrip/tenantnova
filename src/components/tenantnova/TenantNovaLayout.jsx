@@ -2,13 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import { Building2, Home, KeyRound, LogOut, ShieldAlert } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-import { resolveTenantNovaAccess } from "@/lib/tenantNova";
+import { createAuditLog, resolveTenantNovaAccess } from "@/lib/tenantNova";
 
 export default function TenantNovaLayout() {
   const [access, setAccess] = useState(null);
   const location = useLocation();
 
   useEffect(() => { resolveTenantNovaAccess().then(setAccess); }, []);
+  useEffect(() => {
+    if (access?.status === "ready" && location.pathname.startsWith("/admin") && !access.isAdmin) {
+      createAuditLog({ organizationId: access.organization.id, user: access.user, role: access.membership?.role, action: "Unauthorized dashboard access attempt", entityType: "OperationalDashboard", entityId: "admin-dashboard", reason: "Non-admin attempted to access admin operational dashboard" });
+    }
+  }, [access?.status, access?.isAdmin, location.pathname]);
 
   if (!access) return <div className="min-h-screen grid place-items-center bg-slate-50"><div className="h-8 w-8 animate-spin rounded-full border-4 border-slate-200 border-t-teal-700" /></div>;
   if (access.status === "no_membership") return <NoMembership />;
