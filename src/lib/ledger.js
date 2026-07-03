@@ -6,7 +6,7 @@ export const methods = ["Manual", "E-transfer", "Cheque", "Cash", "Card Placehol
 export const statuses = ["Pending", "Posted", "Failed", "Reversed", "Refunded"];
 
 export function calculateLeaseBalance(entries) {
-  return entries.filter(e => activeOnly(e) && e.status === "Posted").reduce((sum, e) => sum + (e.debit_credit_type === "Debit" ? Number(e.amount || 0) : -Number(e.amount || 0)), 0);
+  return entries.filter(e => activeOnly(e) && ["Posted", "Reversed"].includes(e.status)).reduce((sum, e) => sum + (e.debit_credit_type === "Debit" ? Number(e.amount || 0) : -Number(e.amount || 0)), 0);
 }
 
 export function tenantSafeLedgerEntry(entry) {
