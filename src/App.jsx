@@ -20,6 +20,7 @@ import ArrearsView from '@/pages/admin/ArrearsView';
 import AdminMaintenance from '@/pages/admin/Maintenance';
 import AdminNotices from '@/pages/admin/Notices';
 import AdminLeaseLifecycle from '@/pages/admin/LeaseLifecycle';
+import AdminContactMessages from '@/pages/admin/ContactMessages';
 import DocumentCenter from '@/pages/admin/DocumentCenter';
 import LeaseDocuments from '@/pages/admin/LeaseDocuments';
 import TenantDocuments from '@/pages/admin/TenantDocuments';
@@ -72,6 +73,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/maintenance" element={<AdminMaintenance />} />
         <Route path="/admin/notices" element={<AdminNotices />} />
         <Route path="/admin/lifecycle" element={<AdminLeaseLifecycle />} />
+        <Route path="/admin/contact" element={<AdminContactMessages />} />
         <Route path="/admin/documents" element={<DocumentCenter />} />
         <Route path="/admin/documents/lease/:leaseId" element={<LeaseDocuments />} />
         <Route path="/admin/documents/tenant/:tenantId" element={<TenantDocuments />} />
