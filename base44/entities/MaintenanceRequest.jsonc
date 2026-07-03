@@ -1,0 +1,152 @@
+{
+  "name": "MaintenanceRequest",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "lease_id": {
+      "type": "string"
+    },
+    "tenant_id": {
+      "type": "string"
+    },
+    "submitted_by_user_id": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Plumbing",
+        "Electrical",
+        "HVAC",
+        "Appliance",
+        "Structural",
+        "Pest",
+        "Exterior",
+        "Safety",
+        "Cosmetic",
+        "Other"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "Emergency",
+        "Urgent",
+        "Routine",
+        "Low"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Submitted",
+        "Acknowledged",
+        "Assigned",
+        "Scheduled",
+        "In Progress",
+        "Completed",
+        "Tenant Confirmation",
+        "Closed",
+        "Reopened"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "photos_videos_array": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "access_instructions": {
+      "type": "string"
+    },
+    "preferred_access_times": {
+      "type": "string"
+    },
+    "assigned_to_user_id_nullable": {
+      "type": "string"
+    },
+    "vendor_id_nullable": {
+      "type": "string"
+    },
+    "tenant_visible_notes": {
+      "type": "string"
+    },
+    "internal_notes": {
+      "type": "string"
+    },
+    "cost_estimate": {
+      "type": "number"
+    },
+    "actual_cost": {
+      "type": "number"
+    },
+    "chargeback_amount": {
+      "type": "number"
+    },
+    "completion_photos_array": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tenant_feedback_rating": {
+      "type": "number"
+    },
+    "tenant_feedback_notes": {
+      "type": "string"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "acknowledged_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scheduled_at_nullable": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "closed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_id",
+    "unit_id",
+    "lease_id",
+    "tenant_id",
+    "submitted_by_user_id",
+    "category",
+    "priority",
+    "status",
+    "description",
+    "submitted_at",
+    "is_active"
+  ]
+}

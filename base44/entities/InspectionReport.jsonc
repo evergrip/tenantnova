@@ -1,0 +1,89 @@
+{
+  "name": "InspectionReport",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id": {
+      "type": "string"
+    },
+    "unit_id": {
+      "type": "string"
+    },
+    "lease_id": {
+      "type": "string"
+    },
+    "inspection_type": {
+      "type": "string",
+      "enum": [
+        "Move-In",
+        "Move-Out",
+        "Periodic",
+        "Maintenance",
+        "Other"
+      ]
+    },
+    "inspection_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "inspector_user_id": {
+      "type": "string"
+    },
+    "tenant_present": {
+      "type": "boolean",
+      "default": false
+    },
+    "room_by_room_condition_json": {
+      "type": "object"
+    },
+    "photos_array": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "damages_json": {
+      "type": "object"
+    },
+    "tenant_signature_placeholder": {
+      "type": "string"
+    },
+    "admin_signature_placeholder": {
+      "type": "string"
+    },
+    "tenant_visible_notes": {
+      "type": "string"
+    },
+    "internal_admin_notes": {
+      "type": "string"
+    },
+    "shared_with_tenant": {
+      "type": "boolean",
+      "default": false
+    },
+    "linked_document_id_nullable": {
+      "type": "string"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "property_id",
+    "unit_id",
+    "lease_id",
+    "inspection_type",
+    "inspection_date",
+    "inspector_user_id",
+    "shared_with_tenant",
+    "is_active"
+  ]
+}

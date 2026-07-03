@@ -20,11 +20,15 @@ import ArrearsView from '@/pages/admin/ArrearsView';
 import DocumentCenter from '@/pages/admin/DocumentCenter';
 import LeaseDocuments from '@/pages/admin/LeaseDocuments';
 import TenantDocuments from '@/pages/admin/TenantDocuments';
+import AdminMaintenance from '@/pages/admin/AdminMaintenance';
+import AdminInspections from '@/pages/admin/AdminInspections';
 import TenantDashboard from '@/pages/tenant/TenantDashboard';
 import MyLease from '@/pages/tenant/MyLease';
 import Profile from '@/pages/tenant/Profile';
 import TenantLedger from '@/pages/tenant/TenantLedger';
 import Documents from '@/pages/tenant/Documents';
+import TenantMaintenance from '@/pages/tenant/TenantMaintenance';
+import TenantInspections from '@/pages/tenant/TenantInspections';
 import ContactManager from '@/pages/tenant/ContactManager';
 // Add page imports here
 
@@ -66,12 +70,16 @@ const AuthenticatedApp = () => {
         <Route path="/admin/documents" element={<DocumentCenter />} />
         <Route path="/admin/documents/lease/:leaseId" element={<LeaseDocuments />} />
         <Route path="/admin/documents/tenant/:tenantId" element={<TenantDocuments />} />
+        <Route path="/admin/maintenance" element={<AdminMaintenance />} />
+        <Route path="/admin/inspections" element={<AdminInspections />} />
         <Route path="/admin/audit-logs" element={<AuditLogs />} />
         <Route path="/admin/settings" element={<OrganizationSettings />} />
         <Route path="/tenant" element={<TenantDashboard />} />
         <Route path="/tenant/lease" element={<MyLease />} />
         <Route path="/tenant/ledger" element={<TenantLedger />} />
         <Route path="/tenant/documents" element={<Documents />} />
+        <Route path="/tenant/maintenance" element={<TenantMaintenance />} />
+        <Route path="/tenant/inspections" element={<TenantInspections />} />
         <Route path="/tenant/profile" element={<Profile />} />
         <Route path="/tenant/contact" element={<ContactManager />} />
       </Route>

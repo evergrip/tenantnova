@@ -15,9 +15,9 @@ export default function TenantNovaLayout() {
 
   const adminLinks = [
     ["/admin", "Dashboard"], ["/admin/properties", "Properties & Units"], ["/admin/tenants-leases", "Tenants & Leases"],
-    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
+    ["/admin/lease-participants", "Lease Participants"], ["/admin/ledger", "Portfolio Ledger"], ["/admin/arrears", "Arrears"], ["/admin/documents", "Document Center"], ["/admin/maintenance", "Maintenance"], ["/admin/inspections", "Inspections"], ["/admin/audit-logs", "Audit Logs"], ["/admin/settings", "Organization Settings"]
   ];
-  const tenantLinks = [["/tenant", "Dashboard"], ["/tenant/lease", "My Lease"], ["/tenant/ledger", "Rent Ledger & Payments"], ["/tenant/documents", "Documents"], ["/tenant/profile", "Profile"], ["/tenant/contact", "Contact Manager"]];
+  const tenantLinks = [["/tenant", "Dashboard"], ["/tenant/lease", "My Lease"], ["/tenant/ledger", "Rent Ledger & Payments"], ["/tenant/documents", "Documents"], ["/tenant/maintenance", "Maintenance"], ["/tenant/inspections", "Inspections"], ["/tenant/profile", "Profile"], ["/tenant/contact", "Contact Manager"]];
   const links = access.isAdmin ? adminLinks : tenantLinks;
   const tenantSafeOrganization = access.organization ? {
     organization_name: access.organization.name,
