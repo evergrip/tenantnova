@@ -1,6 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, canTenantUseParticipant, createAuditLog } from "@/lib/tenantNova";
-import { sanitizeTenantPayload } from "@/lib/security";
+import { invokeTenantNovaSecurityBoundary, sanitizeTenantPayload } from "@/lib/security";
 
 export const entryTypes = ["Rent Charge", "Payment", "Security Deposit", "Late Fee", "Adjustment", "Refund", "NSF Fee", "Damage Charge", "Other"];
 export const methods = ["Manual", "E-transfer", "Cheque", "Cash", "Card Placeholder", "PAD Placeholder", "Other"];
@@ -32,13 +32,8 @@ export function tenantSafeLedgerEntry(entry) {
 
 export async function getTenantLedgerEntries(access) {
   if (!access.tenant) return [];
-  const participants = (await base44.entities.LeaseParticipant.filter({ organization_id: access.organization_id, tenant_id: access.tenant.id })).filter(canTenantUseParticipant);
-  const entries = [];
-  for (const participant of participants) {
-    const leaseEntries = await base44.entities.FinancialLedgerEntry.filter({ organization_id: access.organization_id, lease_id: participant.lease_id });
-    entries.push(...leaseEntries.filter(activeOnly).map(tenantSafeLedgerEntry));
-  }
-  return entries;
+  const data = await invokeTenantNovaSecurityBoundary("getMyTenantLedger");
+  return data.entries || [];
 }
 
 export async function createLedgerEntry(access, payload, reason) {

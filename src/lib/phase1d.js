@@ -1,6 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, createAuditLog, getTenantLeases } from "@/lib/tenantNova";
-import { sanitizeTenantPayload } from "@/lib/security";
+import { invokeTenantNovaSecurityBoundary, sanitizeTenantPayload } from "@/lib/security";
 
 export const maintenanceCategories = ["Plumbing", "Electrical", "HVAC", "Appliance", "Structural", "Pest", "Exterior", "Safety", "Cosmetic", "Other"];
 export const maintenancePriorities = ["Emergency", "Urgent", "Routine", "Low"];
@@ -35,16 +35,13 @@ export function canTenantAccessInspection(r, access, ctx) {
 
 export async function listTenantMaintenance(access) {
   if (!access.tenant) return [];
-  const ctx = await tenantContext(access);
-  const rows = await base44.entities.MaintenanceRequest.filter({ organization_id: access.organization_id, tenant_id: access.tenant.id }, "-submitted_at", 100);
-  return rows.filter(r => canTenantAccessMaintenance(r, access, ctx)).map(tenantSafeMaintenance);
+  const data = await invokeTenantNovaSecurityBoundary("getMyTenantMaintenance");
+  return data.maintenance_requests || [];
 }
 
 export async function getTenantMaintenanceById(access, id) {
-  const ctx = await tenantContext(access);
-  const row = await base44.entities.MaintenanceRequest.get(id).catch(() => null);
-  if (!canTenantAccessMaintenance(row, access, ctx)) { await logUnauthorized(access, "MaintenanceRequest", id, "Unauthorized maintenance access attempt"); return null; }
-  return tenantSafeMaintenance(row);
+  const data = await invokeTenantNovaSecurityBoundary("getMaintenanceRequestById", { maintenance_request_id: id }).catch(() => ({ maintenance_request: null }));
+  return data.maintenance_request || null;
 }
 
 export async function createTenantMaintenance(access, form) {
@@ -66,16 +63,13 @@ export async function tenantUpdateMaintenance(access, row, updates, action) {
 
 export async function listTenantInspections(access) {
   if (!access.tenant) return [];
-  const ctx = await tenantContext(access);
-  const rows = await base44.entities.InspectionReport.filter({ organization_id: access.organization_id }, "-inspection_date", 100);
-  return rows.filter(r => canTenantAccessInspection(r, access, ctx)).map(tenantSafeInspection);
+  const data = await invokeTenantNovaSecurityBoundary("getMyTenantInspections");
+  return data.inspection_reports || [];
 }
 
 export async function getTenantInspectionById(access, id) {
-  const ctx = await tenantContext(access);
-  const row = await base44.entities.InspectionReport.get(id).catch(() => null);
-  if (!canTenantAccessInspection(row, access, ctx)) { await logUnauthorized(access, "InspectionReport", id, "Unauthorized inspection access attempt"); return null; }
-  return tenantSafeInspection(row);
+  const data = await invokeTenantNovaSecurityBoundary("getInspectionById", { inspection_report_id: id }).catch(() => ({ inspection_report: null }));
+  return data.inspection_report || null;
 }
 
 export async function adminUpdateMaintenance(access, row, updates) {

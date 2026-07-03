@@ -158,6 +158,89 @@ Deno.serve(async (req) => {
       return Response.json({ rows: safeRows.filter(Boolean) });
     }
 
+    if (action === "getMyTenantLedger") {
+      const memberships = await base44.asServiceRole.entities.OrganizationMembership.filter({ user_id: user.id, role: "Tenant", is_active: true });
+      const entries = [];
+      for (const membership of memberships.filter(isActive)) {
+        const tenants = await tenantProfiles(base44, user, membership.organization_id);
+        for (const tenant of tenants) {
+          const participants = await base44.asServiceRole.entities.LeaseParticipant.filter({ organization_id: membership.organization_id, tenant_id: tenant.id, is_active: true });
+          for (const participant of participants.filter((row) => isActive(row) && tenantLeaseAccessLevels.includes(row.access_level))) {
+            const rows = await base44.asServiceRole.entities.FinancialLedgerEntry.filter({ organization_id: membership.organization_id, lease_id: participant.lease_id }, "-effective_date", 100);
+            entries.push(...rows.filter(isActive).map((row) => sanitizeTenant(row, "FinancialLedgerEntry")).filter(Boolean));
+          }
+        }
+      }
+      return Response.json({ entries });
+    }
+
+    if (action === "getMyTenantDocuments") {
+      const memberships = await base44.asServiceRole.entities.OrganizationMembership.filter({ user_id: user.id, role: "Tenant", is_active: true });
+      const documents = [];
+      for (const membership of memberships.filter(isActive)) {
+        const tenants = await tenantProfiles(base44, user, membership.organization_id);
+        for (const tenant of tenants) {
+          const participants = await base44.asServiceRole.entities.LeaseParticipant.filter({ organization_id: membership.organization_id, tenant_id: tenant.id, is_active: true });
+          const leaseIds = participants.filter((row) => isActive(row) && tenantLeaseAccessLevels.includes(row.access_level)).map((row) => row.lease_id);
+          const docs = await base44.asServiceRole.entities.Document.filter({ organization_id: membership.organization_id }, "-created_date", 100);
+          for (const doc of docs.filter(isActive)) {
+            if (!tenantVisibleVisibilities.includes(doc.visibility)) continue;
+            const allowed = doc.tenant_id_nullable === tenant.id || (doc.lease_id_nullable && leaseIds.includes(doc.lease_id_nullable));
+            if (allowed && !doc.replaced_by_document_id_nullable) documents.push(sanitizeTenant(doc, "Document"));
+          }
+        }
+      }
+      return Response.json({ documents: documents.filter(Boolean) });
+    }
+
+    if (action === "getMyTenantMaintenance") {
+      const memberships = await base44.asServiceRole.entities.OrganizationMembership.filter({ user_id: user.id, role: "Tenant", is_active: true });
+      const maintenance_requests = [];
+      for (const membership of memberships.filter(isActive)) {
+        const tenants = await tenantProfiles(base44, user, membership.organization_id);
+        for (const tenant of tenants) {
+          const participants = await base44.asServiceRole.entities.LeaseParticipant.filter({ organization_id: membership.organization_id, tenant_id: tenant.id, is_active: true });
+          const leaseIds = participants.filter((row) => isActive(row) && tenantLeaseAccessLevels.includes(row.access_level)).map((row) => row.lease_id);
+          const rows = await base44.asServiceRole.entities.MaintenanceRequest.filter({ organization_id: membership.organization_id, tenant_id: tenant.id }, "-submitted_at", 100);
+          maintenance_requests.push(...rows.filter((row) => isActive(row) && leaseIds.includes(row.lease_id)).map((row) => sanitizeTenant(row, "MaintenanceRequest")).filter(Boolean));
+        }
+      }
+      return Response.json({ maintenance_requests });
+    }
+
+    if (action === "getMyTenantInspections") {
+      const memberships = await base44.asServiceRole.entities.OrganizationMembership.filter({ user_id: user.id, role: "Tenant", is_active: true });
+      const inspection_reports = [];
+      for (const membership of memberships.filter(isActive)) {
+        const tenants = await tenantProfiles(base44, user, membership.organization_id);
+        for (const tenant of tenants) {
+          const participants = await base44.asServiceRole.entities.LeaseParticipant.filter({ organization_id: membership.organization_id, tenant_id: tenant.id, is_active: true });
+          const leaseIds = participants.filter((row) => isActive(row) && tenantLeaseAccessLevels.includes(row.access_level)).map((row) => row.lease_id);
+          const rows = await base44.asServiceRole.entities.InspectionReport.filter({ organization_id: membership.organization_id }, "-inspection_date", 100);
+          inspection_reports.push(...rows.filter((row) => isActive(row) && row.shared_with_tenant === true && leaseIds.includes(row.lease_id)).map((row) => sanitizeTenant(row, "InspectionReport")).filter(Boolean));
+        }
+      }
+      return Response.json({ inspection_reports });
+    }
+
+    if (action === "listMyApplications") {
+      const rows = await base44.asServiceRole.entities.RentalApplication.filter({ applicant_user_id: user.id }, "-created_date", 20);
+      const applications = [];
+      for (const application of rows.filter(isActive)) {
+        const membership = await requireOrganization(base44, user, application.organization_id);
+        if (membership.role === "Applicant") applications.push(sanitizeApplicant(application, "RentalApplication"));
+      }
+      return Response.json({ applications: applications.filter(Boolean) });
+    }
+
+    if (action === "listApplicationDocuments") {
+      const result = await authorizeApplication(base44, user, body.application_id);
+      if (result.role !== "Applicant" && result.role !== "Admin") throw new Error("Application document access denied");
+      const rows = await base44.asServiceRole.entities.Document.filter({ organization_id: result.application.organization_id, application_id_nullable: result.application.id }, "-created_date", 50);
+      const documents = rows.filter((row) => isActive(row) && !["Admin Only", "Internal", "Investor Aggregate"].includes(row.visibility)).map((row) => result.role === "Applicant" ? sanitizeApplicant(row, "Document") : sanitizeStaff(row));
+      return Response.json({ documents: documents.filter(Boolean) });
+    }
+
     if (action === "getTenantProfileById") {
       const tenant = await base44.asServiceRole.entities.Tenant.get(body.tenant_id);
       if (!isActive(tenant)) throw new Error("Tenant not found or inactive");
@@ -221,6 +304,19 @@ Deno.serve(async (req) => {
       const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({ file_uri: reference, expires_in: expiresIn });
       await logAudit(base44, result.document.organization_id, user, result.membership.role, "Document signed URL requested", "Document", result.document.id, "Phase 2E authorized signed URL proof request");
       return Response.json({ signed_url: signed.signed_url, expires_in: expiresIn, document: result.payload });
+    }
+
+    if (action === "createReadinessRecord") {
+      if (!readinessEntities.includes(body.entity_name)) throw new Error("Unsupported readiness entity");
+      const organizationId = body.organization_id;
+      const membership = await requireAdmin(base44, user, organizationId);
+      const payload = { ...(body.payload || {}), organization_id: organizationId };
+      delete payload.id;
+      delete payload.created_date;
+      delete payload.updated_date;
+      const created = await base44.asServiceRole.entities[body.entity_name].create(payload);
+      await logAudit(base44, organizationId, user, membership.role, `${body.entity_name} created through backend boundary`, body.entity_name, created.id, "Phase 2F admin-only backend readiness create");
+      return Response.json({ record: sanitizeStaff(created, true) });
     }
 
     if (action === "updateReadinessRecord") {

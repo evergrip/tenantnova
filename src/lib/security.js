@@ -1,5 +1,10 @@
 import { base44 } from "@/api/base44Client";
 
+export async function invokeTenantNovaSecurityBoundary(action, payload = {}) {
+  const response = await base44.functions.invoke("tenantNovaSecurityBoundary", { action, ...payload });
+  return response.data;
+}
+
 export const TENANTNOVA_ROLES = ["Admin", "Tenant", "Applicant", "Vendor", "Investor", "Staff", "ReadOnlyAdmin"];
 export const ADMIN_ONLY_ROLES = ["Admin"];
 export const COMMAND_CENTER_ROLES = ["Admin", "Staff", "ReadOnlyAdmin"];

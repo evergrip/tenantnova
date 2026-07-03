@@ -1,6 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, canTenantUseParticipant, createAuditLog } from "@/lib/tenantNova";
-import { sanitizeTenantPayload } from "@/lib/security";
+import { invokeTenantNovaSecurityBoundary, sanitizeTenantPayload } from "@/lib/security";
 
 export const documentCategories = ["ID", "Income Proof", "Credit Background Check", "Insurance", "Lease", "Addendum", "Inspection", "Notice", "Form", "Receipt", "Maintenance", "Investor Report", "Internal", "Other"];
 export const documentVisibilities = ["Tenant Only", "Shared With Tenant", "Admin Only", "Internal", "Investor Aggregate"];
@@ -72,9 +72,8 @@ export function canTenantAccessDocument(doc, access, context) {
 
 export async function getTenantDocuments(access) {
   if (!access.tenant) return [];
-  const context = await getTenantDocumentContext(access);
-  const docs = await base44.entities.Document.filter({ organization_id: access.organization_id });
-  return docs.filter(doc => canTenantAccessDocument(doc, access, context)).filter(doc => !doc.replaced_by_document_id_nullable).map(tenantSafeDocument);
+  const data = await invokeTenantNovaSecurityBoundary("getMyTenantDocuments");
+  return data.documents || [];
 }
 
 export async function createDocument(access, payload, reason) {

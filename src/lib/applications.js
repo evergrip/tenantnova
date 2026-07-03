@@ -1,6 +1,6 @@
 import { base44 } from "@/api/base44Client";
 import { activeOnly, createAuditLog } from "@/lib/tenantNova";
-import { sanitizeApplicantPayload } from "@/lib/security";
+import { invokeTenantNovaSecurityBoundary, sanitizeApplicantPayload } from "@/lib/security";
 
 export const applicationStatuses = ["Draft", "Submitted", "Under Review", "More Info Requested", "Approved", "Declined", "Withdrawn", "Lease Offered", "Lease Signed"];
 export const editableApplicantStatuses = ["Draft", "More Info Requested"];
@@ -29,14 +29,13 @@ export function applicantCanAccess(app, access) {
 
 export async function listApplicantApplications(access) {
   if (!access?.isApplicant) return [];
-  const rows = await base44.entities.RentalApplication.filter({ organization_id: access.organization_id, applicant_user_id: access.user.id }, "-created_date", 20);
-  return rows.filter(r => applicantCanAccess(r, access)).map(applicantSafeApplication);
+  const data = await invokeTenantNovaSecurityBoundary("listMyApplications");
+  return data.applications || [];
 }
 
 export async function getApplicantApplication(access, id) {
-  const row = await base44.entities.RentalApplication.get(id).catch(() => null);
-  if (!applicantCanAccess(row, access)) { await logUnauthorized(access, id, "Applicant unauthorized access attempt"); return null; }
-  return applicantSafeApplication(row);
+  const data = await invokeTenantNovaSecurityBoundary("getRentalApplicationById", { application_id: id }).catch(() => ({ rental_application: null }));
+  return data.rental_application || null;
 }
 
 export async function saveApplicantApplication(access, form, existing) {
@@ -78,10 +77,8 @@ export function normalizeApplicationForm(access, form) {
 
 export async function listApplicantDocuments(access, applicationId) {
   if (!access?.isApplicant) return [];
-  const app = await base44.entities.RentalApplication.get(applicationId).catch(() => null);
-  if (!applicantCanAccess(app, access)) return [];
-  const docs = await base44.entities.Document.filter({ organization_id: access.organization_id, application_id_nullable: applicationId }, "-created_date", 50);
-  return docs.filter(d => activeOnly(d) && d.is_active !== false && !["Admin Only", "Internal", "Investor Aggregate"].includes(d.visibility)).map(d => sanitizeApplicantPayload(d, "Document"));
+  const data = await invokeTenantNovaSecurityBoundary("listApplicationDocuments", { application_id: applicationId });
+  return data.documents || [];
 }
 
 export async function adminUpdateApplication(access, app, updates, reason) {
