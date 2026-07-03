@@ -1,0 +1,114 @@
+{
+  "name": "Notice",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string"
+    },
+    "property_id_nullable": {
+      "type": "string"
+    },
+    "unit_id_nullable": {
+      "type": "string"
+    },
+    "lease_id_nullable": {
+      "type": "string"
+    },
+    "tenant_id_nullable": {
+      "type": "string"
+    },
+    "created_by_user_id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "notice_type": {
+      "type": "string",
+      "enum": [
+        "General Notice",
+        "Entry Notice",
+        "Rent Increase",
+        "Lease Renewal",
+        "Lease Termination",
+        "Inspection",
+        "Hearing/Dispute",
+        "Form",
+        "Other"
+      ],
+      "default": "General Notice"
+    },
+    "province": {
+      "type": "string",
+      "default": "NS"
+    },
+    "form_code_optional": {
+      "type": "string"
+    },
+    "file_url_or_storage_reference": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Draft",
+        "Served",
+        "Acknowledged",
+        "Withdrawn",
+        "Archived"
+      ],
+      "default": "Draft"
+    },
+    "delivery_method": {
+      "type": "string",
+      "enum": [
+        "Portal",
+        "Email",
+        "Hand Delivery",
+        "Registered Mail",
+        "Other"
+      ],
+      "default": "Portal"
+    },
+    "served_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "requires_acknowledgement": {
+      "type": "boolean",
+      "default": true
+    },
+    "acknowledged_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "acknowledged_by_user_id": {
+      "type": "string"
+    },
+    "tenant_visible_note": {
+      "type": "string"
+    },
+    "internal_admin_note": {
+      "type": "string"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "organization_id",
+    "created_by_user_id",
+    "title",
+    "body",
+    "notice_type",
+    "status"
+  ]
+}
