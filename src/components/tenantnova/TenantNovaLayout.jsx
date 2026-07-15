@@ -8,7 +8,7 @@ import { useAuth } from "@/lib/AuthContext";
 export default function TenantNovaLayout() {
   const [access, setAccess] = useState(null);
   const location = useLocation();
-  const { isAuthenticated, authChecked, navigateToLogin } = useAuth();
+  const { isAuthenticated, authChecked } = useAuth();
 
   useEffect(() => {
     if (!authChecked) return;
@@ -21,7 +21,7 @@ export default function TenantNovaLayout() {
       .then((nextAccess) => { if (!cancelled) setAccess(nextAccess); })
       .catch(() => { if (!cancelled) setAccess({ status: "error" }); });
     return () => { cancelled = true; };
-  }, [authChecked, isAuthenticated, navigateToLogin]);
+  }, [authChecked, isAuthenticated]);
   useEffect(() => {
     if (access?.status !== "ready" || !location.pathname.startsWith("/admin")) return;
     const isReadinessPath = location.pathname.startsWith("/admin/readiness") || location.pathname.startsWith("/admin/integration-readiness") || location.pathname.startsWith("/admin/production-hardening") || location.pathname.startsWith("/admin/security-review");
@@ -81,7 +81,7 @@ function NoMembership() {
 }
 
 function AccessLoadError() {
-  return <div className="min-h-screen grid place-items-center bg-slate-50 p-6"><div className="max-w-lg rounded-2xl border bg-white p-8 text-center shadow-sm"><ShieldAlert className="mx-auto mb-4 text-red-600" /><h1 className="text-2xl font-bold">Unable to load access</h1><p className="mt-3 text-slate-600">Please sign in again or contact an administrator to confirm your TenantNova membership.</p><button onClick={() => base44.auth.redirectToLogin(window.location.href)} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal-700 px-4 py-2 text-white">Sign in again</button></div></div>;
+  return <div className="min-h-screen grid place-items-center bg-slate-50 p-6"><div className="max-w-lg rounded-2xl border bg-white p-8 text-center shadow-sm"><ShieldAlert className="mx-auto mb-4 text-red-600" /><h1 className="text-2xl font-bold">Unable to load access</h1><p className="mt-3 text-slate-600">Please sign in again or contact an administrator to confirm your TenantNova membership.</p><button onClick={() => { window.location.href = `/login?from_url=${encodeURIComponent(window.location.href)}`; }} className="mt-6 inline-flex items-center gap-2 rounded-xl bg-teal-700 px-4 py-2 text-white">Sign in again</button></div></div>;
 }
 
 function AccessDenied() {
