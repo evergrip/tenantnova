@@ -112,6 +112,7 @@ const AuthenticatedApp = () => {
         <Route path="/admin/integration-readiness" element={<AdminIntegrationReadiness />} />
         <Route path="/admin/production-hardening" element={<AdminProductionHardening />} />
         <Route path="/admin/security-review" element={<AdminSecurityReview />} />
+        <Route path="/admin/security-reviews" element={<AdminSecurityReview />} />
         <Route path="/admin/audit-logs" element={<AuditLogs />} />
         <Route path="/admin/settings" element={<OrganizationSettings />} />
         <Route path="/tenant" element={<TenantDashboard />} />
