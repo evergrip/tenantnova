@@ -70,8 +70,7 @@ export function canTenantAccessDocument(doc, access, context) {
   return false;
 }
 
-export async function getTenantDocuments(access) {
-  if (!access.tenant) return [];
+export async function getTenantDocuments() {
   const data = await invokeTenantNovaSecurityBoundary("getMyTenantDocuments");
   return data.documents || [];
 }
